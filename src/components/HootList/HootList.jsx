@@ -1,22 +1,22 @@
 import { Link } from 'react-router-dom';
 import AuthorDate from '../common/AuthorDate';
 
-const HootList = ({hoots}) => {
-  if (!hoots.length) return <main>Loading...</main>;
+const restaurantsList = ({restaurants}) => {
+  if (!restaurants.length) return <main>Loading...</main>;
 
   return <main>
       {
-        hoots.map((hoot)=> <Link key={hoot._id} to={`/hoots/${hoot._id}`}>
+        restaurants .map((restaurant)=> <Link key={restaurant._id} to={`/restaurants/${restaurant._id}`}>
           <article>
-            <header>
-              <h2>{hoot.title}</h2>
-              <AuthorDate name={hoot?.author?.username ?? "Anonymous"} date={hoot.createdAt}/>
-            </header>
-            <p>{hoot.text}</p>
+            {/* <header>
+              <h2>{restaurant.title}</h2>
+              <AuthorDate name={restaurant?.owner?.username ?? "Anonymous"} date={restaurant.createdAt}/>
+            </header> */}
+            <p>{restaurant.name}</p>
           </article>
         </Link>)
       }
     </main>;
 };
 
-export default HootList;
+export default restaurantsList;

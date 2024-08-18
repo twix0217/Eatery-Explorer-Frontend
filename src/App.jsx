@@ -15,17 +15,17 @@ import HootForm from "./components/HootForm/HootForm";
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
-  const [hoots, setHoots] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function getHoots() {
-      const hootsData = await hootService.index();
-      setHoots(hootsData);
+    async function getRestaurants() {
+      const restaurantData = await hootService.index();
+      setRestaurants(restaurantData);
     }
     if (user) {
       // fetch the hoots
-      getHoots();
+      getRestaurants();
     }
   }, [user]);
 
@@ -48,7 +48,7 @@ const App = () => {
           // Protected Routes:
           <>
             <Route path="/" element={<Dashboard user={user} />} />
-            <Route path="/hoots" element={<HootList hoots={hoots} />} />
+            <Route path="/restaurants" element={<HootList restaurants={restaurants} />} />
             <Route path="/hoots/:hootId" element={<HootDetails />} />
             <Route
               path="/restaurants/new"
