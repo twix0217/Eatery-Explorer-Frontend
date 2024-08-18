@@ -1,9 +1,9 @@
-const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/hoots`;
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/restaurants`;
 
 
-const create = async (hootId, formData) => {
+const create = async (restaurantId, formData) => {
   try {
-    const options = {
+    const data = {
       method: 'POST',
       headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -12,7 +12,7 @@ const create = async (hootId, formData) => {
       body: JSON.stringify(formData)
     }
 
-    const res = await fetch(`${BASE_URL}/${hootId}/comments/`, options)
+    const res = await fetch(`${BASE_URL}/${restaurantId}/comments/`, data)
 
     return res.json()
   }catch(e){
