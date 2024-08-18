@@ -3,8 +3,10 @@ const Dashboard = ({ user }) => {
     <main>
       <h1>Welcome, {user.username}</h1>
       <p>
-        This is the dashboard page where you, and only you, can see a dashboard
-        of all of your things.
+
+
+      Here's a complete list of restaurants, including their details and the specifics of each one's menu.
+
       </p>
     </main>
   );

@@ -18,6 +18,5 @@ const HootList = ({hoots}) => {
       }
     </main>;
 };
-//
-//
+
 export default HootList;
