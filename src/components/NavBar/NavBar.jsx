@@ -24,5 +24,6 @@ const NavBar = ({ user, handleSignout }) => {
     </>
   )
 }
+//
 
 export default NavBar;
