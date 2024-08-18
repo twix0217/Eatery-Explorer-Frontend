@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+// editing
 
 const NavBar = ({ user, handleSignout }) => {
   return (
