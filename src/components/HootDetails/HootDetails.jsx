@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useLayoutEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
+import FoodDetails from "../foodDetails/foodDetails";
 // Services
 import hootService from "../../services/hootService";
 import commentService from "../../services/commentService";
@@ -54,7 +55,7 @@ const resturauntDetails = (props) => {
     item.type === "main" ? (
       <>
         <ul>
-          <li>{item.name}</li>
+          <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
           {/* <li>{item.description}</li>
           <li>{item.type}</li>
           <li>{item.price}</li> */}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import authService from "./services/authService";
 import hootService from "./services/hootService";
+import FoodDetails from "./components/foodDetails/foodDetails";
 
 // Components
 import NavBar from "./components/NavBar/NavBar";
@@ -50,6 +51,8 @@ const App = () => {
             <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/restaurants" element={<HootList restaurants={restaurants} />} />
             <Route path="/restaurants/:restaurantsId" element={<HootDetails />} />
+
+            <Route path="/restaurants/:restaurantsId/menu/foodId" element={<FoodDetails restaurants={restaurants} />} />
             <Route
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
