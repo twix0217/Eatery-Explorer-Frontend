@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import FoodDetails from "../foodDetails/foodDetails";
 // Services
 import hootService from "../../services/hootService";
@@ -9,8 +9,6 @@ import commentService from "../../services/commentService";
 // Components
 import AuthorDate from "../common/AuthorDate";
 import CommentForm from "../CommentForm/CommentForm";
-
-
 
 const resturauntDetails = (props) => {
   const { restaurantsId } = useParams();
@@ -34,6 +32,14 @@ const resturauntDetails = (props) => {
 
     setRestaurant(copyRestaurant);
   };
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    // const res = await hootService.deleter(restaurantsId);
+    // console.log(res);
+    // props.setRestId(null);
+    await props.handleDeleteRestaurant(restaurantsId);
+    navigate(`/owners/${props.user.id}`);
+  };
 
   if (!restaurant) {
     return (
@@ -45,7 +51,6 @@ const resturauntDetails = (props) => {
 
   return (
     <main>
-
       <header>
         <h1>{restaurant.name.toUpperCase()}</h1>
         <h1>{restaurant.type}</h1>
@@ -111,7 +116,6 @@ const resturauntDetails = (props) => {
         {/* <AuthorDate name={hoot.author.username} date={hoot.createdAt}/> */}
       </header>
 
-     
       <section>
 
 

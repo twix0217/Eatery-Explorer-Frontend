@@ -24,6 +24,20 @@ const App = () => {
   const navigate = useNavigate();
   const [resId, setRestId] = useState(null);
 
+
+  //-------------------------------------
+
+  async function getRestaurants() {
+    const restaurantData = await hootService.index();
+    setRestaurants(restaurantData);
+  }
+  
+
+
+
+  //---------------------------------
+  
+
   useEffect(() => {
     async function getRestaurants() {
       const restaurantData = await hootService.index();
@@ -92,7 +106,7 @@ const App = () => {
             />
             <Route
               path="/restaurants/:restaurantsId"
-              element={<HootDetails setRestId={setRestId} user={user} />}
+              element={<HootDetails setRestId={setRestId} user={user} handleDeleteRestaurant={handleDeleteRestaurant} />}
             />
 
             <Route
