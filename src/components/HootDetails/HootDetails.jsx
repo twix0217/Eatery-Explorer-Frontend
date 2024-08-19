@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import FoodDetails from "../foodDetails/foodDetails";
 // Services
 import hootService from "../../services/hootService";
@@ -9,8 +9,6 @@ import commentService from "../../services/commentService";
 // Components
 import AuthorDate from "../common/AuthorDate";
 import CommentForm from "../CommentForm/CommentForm";
-
-
 
 const resturauntDetails = (props) => {
   const { restaurantsId } = useParams();
@@ -34,6 +32,14 @@ const resturauntDetails = (props) => {
 
     setRestaurant(copyRestaurant);
   };
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    // const res = await hootService.deleter(restaurantsId);
+    // console.log(res);
+    // props.setRestId(null);
+    await props.handleDeleteRestaurant(restaurantsId);
+    navigate(`/owners/${props.user.id}`);
+  };
 
   if (!restaurant) {
     return (
@@ -45,103 +51,126 @@ const resturauntDetails = (props) => {
 
   return (
     <main>
-
       <header>
         <h1>{restaurant.name.toUpperCase()}</h1>
         <h1>{restaurant.type}</h1>
         <h3>description: {restaurant.describtion}</h3>
         <h3>location: {restaurant.location}</h3>
         <h3>cuisine: {restaurant.cuisine}</h3>
-        
-        {props.user.id===restaurant.owner ? <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link> : null}
 
+        {props.user.id === restaurant.owner ? (
+          <Link to={`/restaurants/${restaurant._id}/edit`}>
+            Edit Restaurant
+          </Link>
+        ) : null}
+
+        {props.user.id === restaurant.owner ? (
+          <form onSubmit={handlesubmit} action="">
+            <button type="submit">delete the restaurant</button>
+          </form>
+        ) : null}
 
         <ul>
           <p>main dishes :</p>
-  {restaurant.menu.map((item) =>
-    item.type === "main" ? (
-      <>
-        <ul>
-          <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
-          {/* <li>{item.description}</li>
+          {restaurant.menu.map((item) =>
+            item.type === "main" ? (
+              <>
+                <ul>
+                  <li>
+                    {" "}
+                    <Link
+                      key={item._id}
+                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                    >
+                      {item.name}
+                    </Link>{" "}
+                  </li>
+                  {/* <li>{item.description}</li>
           <li>{item.type}</li>
           <li>{item.price}</li> */}
+                </ul>
+              </>
+            ) : null
+          )}
         </ul>
-      </>
-    ) : null
-  )}
-</ul>
-<hr />
-<br />
+        <hr />
+        <br />
 
-<ul>
-
+        <ul>
           <p>side dishes :</p>
-  {restaurant.menu.map((item) =>
-    item.type === "side" ? (
-      <>
-        <ul>
-        <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
-        {/* <li>{item.description}</li>
+          {restaurant.menu.map((item) =>
+            item.type === "side" ? (
+              <>
+                <ul>
+                  <li>
+                    {" "}
+                    <Link
+                      key={item._id}
+                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                    >
+                      {item.name}
+                    </Link>{" "}
+                  </li>
+                  {/* <li>{item.description}</li>
           <li>{item.type}</li>
           <li>{item.price}</li> */}
+                </ul>
+              </>
+            ) : null
+          )}
         </ul>
-      </>
-    ) : null
-  )}
-</ul>
-<hr />
-<br />
-<ul>
-
+        <hr />
+        <br />
+        <ul>
           <p>drinks :</p>
-  {restaurant.menu.map((item) =>
-    item.type === "Drinks" ? (
-      <>
-        <ul>
-        <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
-        {/* <li>{item.description}</li>
+          {restaurant.menu.map((item) =>
+            item.type === "Drinks" ? (
+              <>
+                <ul>
+                  <li>
+                    {" "}
+                    <Link
+                      key={item._id}
+                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                    >
+                      {item.name}
+                    </Link>{" "}
+                  </li>
+                  {/* <li>{item.description}</li>
           <li>{item.type}</li>
           <li>{item.price}</li> */}
+                </ul>
+              </>
+            ) : null
+          )}
         </ul>
-      </>
-    ) : null
-  )}
-</ul>
-<hr />
-
-
-
-
+        <hr />
 
         {/* <AuthorDate name={hoot.author.username} date={hoot.createdAt}/> */}
       </header>
 
-     
       <section>
-
-
-<section>
-        <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
-        <CommentForm handleAddComment={handleAddComment} />
-        {/* {!restaurant.comments.length && <p>There are no comments.</p>} */}
-        {restaurant.comments.length === 0 ? (
-          <p>There are no comments.</p>
-        ) : (
-          <>
-            {restaurant.comments.map((comment) => {
-              return (
-                <div key={comment._id}>
-                
-                  <p> <b>{comment.authorName}</b> : {comment.text}</p>
-                </div>
-              );
-            })}
-          </>
-        )}
-      </section>
-
-
+        <section>
+          <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
+          <CommentForm handleAddComment={handleAddComment} />
+          {/* {!restaurant.comments.length && <p>There are no comments.</p>} */}
+          {restaurant.comments.length === 0 ? (
+            <p>There are no comments.</p>
+          ) : (
+            <>
+              {restaurant.comments.map((comment) => {
+                return (
+                  <div key={comment._id}>
+                    <p>
+                      {" "}
+                      <b>{comment.authorName}</b> : {comment.text}
+                    </p>
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </section>
       </section>
     </main>
   );

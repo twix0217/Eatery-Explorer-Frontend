@@ -22,6 +22,20 @@ const App = () => {
   const navigate = useNavigate();
   const [resId, setRestId] = useState(null);
 
+
+  //-------------------------------------
+
+  async function getRestaurants() {
+    const restaurantData = await hootService.index();
+    setRestaurants(restaurantData);
+  }
+  
+
+
+
+  //---------------------------------
+  
+
   useEffect(() => {
     async function getRestaurants() {
       const restaurantData = await hootService.index();
@@ -60,6 +74,24 @@ const App = () => {
     }
   };
 
+
+
+  const handleDeleteRestaurant = async (restaurantId) => {
+    try {
+      const deletedRestaurant = await hootService.deleter(
+        restaurantId
+      );
+      getRestaurants();
+      navigate(`/owners/${user.id}`);
+
+    } catch (error) {
+      console.error("Error updating restaurant:", error);
+    }
+  };
+
+
+
+
   return (
     <>
       <NavBar user={user} handleSignout={handleSignout} />
@@ -76,7 +108,7 @@ const App = () => {
             />
             <Route
               path="/restaurants/:restaurantsId"
-              element={<HootDetails setRestId={setRestId} user={user} />}
+              element={<HootDetails setRestId={setRestId} user={user} handleDeleteRestaurant={handleDeleteRestaurant} />}
             />
 
             <Route

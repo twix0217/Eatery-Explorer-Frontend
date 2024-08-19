@@ -28,6 +28,26 @@ const show = async (restaurantId) => {
   }
 };
 
+const deleter = async (restaurantId) => {
+  const options = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  
+  };
+  try {
+    const res = await fetch(`${BASE_URL}/${restaurantId}`,options);
+    if (!res.ok) throw new Error("Failed to delete restaurant");
+    return res.json();
+  } catch (error) {
+    console.error("Error deleting restaurant:", error);
+    return null;
+  }
+};
+
+
 // Create a new restaurant
 const getOwnerById = async (ownerId) => {
   try {
@@ -88,4 +108,5 @@ const showFood = async (restaurantId, foodId) => {
   }
 };
 
-export default { index, show, create, getOwnerById, showFood, update };
+
+export default { index, show, create, getOwnerById, showFood, update,deleter };
