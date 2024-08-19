@@ -129,4 +129,4 @@ const addFood = async (restaurantId, foodData) => {
 
 
 
-export default { index, show, create, getOwnerById, showFood, update, addFood};
+export default { index, show, create, getOwnerById, showFood, update, addFood, deleter};

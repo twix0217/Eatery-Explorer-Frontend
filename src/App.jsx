@@ -78,10 +78,10 @@ const App = () => {
       const deletedRestaurant = await hootService.deleter(restaurantId);
       getRestaurants();
       navigate(`/owners/${user.id}`);
-      catch (error) {
-      console.error("Error deleting food:", error);
-    }
-  };
+    
+  }  catch (error) {
+    console.error("Error deleting food:", error);
+  }};
 
   const handleAddFood = async (restaurantId, formData) => {
     try {
