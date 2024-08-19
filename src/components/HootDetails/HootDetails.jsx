@@ -54,123 +54,94 @@ const resturauntDetails = (props) => {
       <header>
         <h1>{restaurant.name.toUpperCase()}</h1>
         <h1>{restaurant.type}</h1>
-        <h3>description: {restaurant.describtion}</h3>
+        <h3>Description: {restaurant.description}</h3>
         <h3>location: {restaurant.location}</h3>
         <h3>cuisine: {restaurant.cuisine}</h3>
 
-        {props.user.id === restaurant.owner ? (
-          <Link to={`/restaurants/${restaurant._id}/edit`}>
-            Edit Restaurant
-          </Link>
-        ) : null}
-
-        {props.user.id === restaurant.owner ? (
-          <form onSubmit={handlesubmit} action="">
-            <button type="submit">delete the restaurant</button>
-          </form>
-        ) : null}
-
         <ul>
-          <p>main dishes :</p>
-          {restaurant.menu.map((item) =>
-            item.type === "main" ? (
-              <>
-                <ul>
-                  <li>
-                    {" "}
-                    <Link
-                      key={item._id}
-                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
-                    >
-                      {item.name}
-                    </Link>{" "}
-                  </li>
-                  {/* <li>{item.description}</li>
-          <li>{item.type}</li>
-          <li>{item.price}</li> */}
-                </ul>
-              </>
-            ) : null
-          )}
+  {restaurant.menu
+    .filter(item => item.type === "Main Course") 
+    .map(item => (
+      <li key={item._id}>
+        <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
+        <ul>
+          <li>Description: {item.description}</li>
+          <li>Type: {item.type}</li>
+          <li>Price: ${item.price}</li>
         </ul>
-        <hr />
-        <br />
+      </li>
+    ))}
+</ul>
+<hr />
+<br />
 
+<ul>
+  {restaurant.menu
+    .filter(item => item.type === "Side") 
+    .map(item => (
+      <li key={item._id}>
+        <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
         <ul>
-          <p>side dishes :</p>
-          {restaurant.menu.map((item) =>
-            item.type === "side" ? (
-              <>
-                <ul>
-                  <li>
-                    {" "}
-                    <Link
-                      key={item._id}
-                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
-                    >
-                      {item.name}
-                    </Link>{" "}
-                  </li>
-                  {/* <li>{item.description}</li>
-          <li>{item.type}</li>
-          <li>{item.price}</li> */}
-                </ul>
-              </>
-            ) : null
-          )}
+          <li>Description: {item.description}</li>
+          <li>Type: {item.type}</li>
+          <li>Price: ${item.price}</li>
         </ul>
-        <hr />
-        <br />
+      </li>
+    ))}
+</ul>
+
+<hr />
+<br />
+<ul>
+  {restaurant.menu
+    .filter(item => item.type === "Beverage") // Ensure this matches your AddFoodForm
+    .map(item => (
+      <li key={item._id}>
+        <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
         <ul>
-          <p>drinks :</p>
-          {restaurant.menu.map((item) =>
-            item.type === "Drinks" ? (
-              <>
-                <ul>
-                  <li>
-                    {" "}
-                    <Link
-                      key={item._id}
-                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
-                    >
-                      {item.name}
-                    </Link>{" "}
-                  </li>
-                  {/* <li>{item.description}</li>
-          <li>{item.type}</li>
-          <li>{item.price}</li> */}
-                </ul>
-              </>
-            ) : null
-          )}
+          <li>Description: {item.description}</li>
+          <li>Type: {item.type}</li>
+          <li>Price: ${item.price}</li>
         </ul>
-        <hr />
+      </li>
+    ))}
+</ul>
+
+<hr />
+
+
+
+
 
         {/* <AuthorDate name={hoot.author.username} date={hoot.createdAt}/> */}
       </header>
 
       <section>
-        <section>
-          <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
-          <CommentForm handleAddComment={handleAddComment} />
-          {/* {!restaurant.comments.length && <p>There are no comments.</p>} */}
-          {restaurant.comments.length === 0 ? (
-            <p>There are no comments.</p>
-          ) : (
-            <>
-              {restaurant.comments.map((comment) => {
-                return (
-                  <div key={comment._id}>
-                    <p>
-                      {" "}
-                      <b>{comment.authorName}</b> : {comment.text}
-                    </p>
-                  </div>
-                );
-              })}
-            </>
-          )}
-        </section>
+
+
+ <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link>
+ <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
+<section>
+        <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
+        <CommentForm handleAddComment={handleAddComment} />
+        {/* {!restaurant.comments.length && <p>There are no comments.</p>} */}
+        {restaurant.comments.length === 0 ? (
+          <p>There are no comments.</p>
+        ) : (
+          <>
+            {restaurant.comments.map((comment) => {
+              return (
+                <div key={comment._id}>
+                
+                  <p> <b>{comment.authorName}</b> : {comment.text}</p>
+                </div>
+              );
+            })}
+          </>
+        )}
+      </section>
+
+
       </section>
     </main>
   );
