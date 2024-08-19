@@ -10,6 +10,8 @@ import commentService from "../../services/commentService";
 import AuthorDate from "../common/AuthorDate";
 import CommentForm from "../CommentForm/CommentForm";
 
+
+
 const resturauntDetails = (props) => {
   const { restaurantsId } = useParams();
   const [restaurant, setRestaurant] = useState(null);
@@ -19,6 +21,7 @@ const resturauntDetails = (props) => {
       const restaurantData = await hootService.show(restaurantsId);
       console.log(restaurantData);
       setRestaurant(restaurantData);
+      props.setRestId(restaurantsId);
     }
     getRestaurant();
   }, [restaurantsId]);

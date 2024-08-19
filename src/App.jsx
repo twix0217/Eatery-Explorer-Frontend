@@ -19,6 +19,8 @@ const App = () => {
   const [user, setUser] = useState(authService.getUser());
   const [restaurants, setRestaurants] = useState([]);
   const navigate = useNavigate();
+  const [resId, setRestId] = useState(null);
+
 
   useEffect(() => {
     async function getRestaurants() {
@@ -51,9 +53,9 @@ const App = () => {
           <>
             <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/restaurants" element={<HootList restaurants={restaurants} />} />
-            <Route path="/restaurants/:restaurantsId" element={<HootDetails />} />
+            <Route path="/restaurants/:restaurantsId" element={<HootDetails setRestId={setRestId}/>}  />
 
-            <Route path="/restaurants/:restaurantsId/menu/foodId" element={<FoodDetails restaurants={restaurants} />} />
+            <Route path={`/restaurants/:restaurantId/menu/:foodId`} element={<FoodDetails restaurants={restaurants} resId={resId}/>} />
             <Route
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}

@@ -52,4 +52,17 @@ const create = async (formData) => {
   return res.json()
 }
 
-export default { index, show, create, getOwnerById };
+
+const showFood = async (restaurantId,foodId) => {
+  try {
+    const res = await fetch(`${BASE_URL}/${restaurantId}/menu/${foodId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export default { index, show, create, getOwnerById , showFood };
