@@ -55,16 +55,17 @@ const resturauntDetails = (props) => {
       <>
         <ul>
           <li>{item.name}</li>
-          <li>{item.description}</li>
+          {/* <li>{item.description}</li>
           <li>{item.type}</li>
-          <li>{item.price}</li>
+          <li>{item.price}</li> */}
         </ul>
-        <hr />
       </>
     ) : null
   )}
 </ul>
+<hr />
 <br />
+
 <ul>
 
           <p>side dishes :</p>
@@ -73,16 +74,15 @@ const resturauntDetails = (props) => {
       <>
         <ul>
           <li>{item.name}</li>
-          <li>{item.description}</li>
+          {/* <li>{item.description}</li>
           <li>{item.type}</li>
-          <li>{item.price}</li>
+          <li>{item.price}</li> */}
         </ul>
-        <hr />
       </>
     ) : null
   )}
 </ul>
-
+<hr />
 <br />
 <ul>
 
@@ -92,15 +92,15 @@ const resturauntDetails = (props) => {
       <>
         <ul>
           <li>{item.name}</li>
-          <li>{item.description}</li>
+          {/* <li>{item.description}</li>
           <li>{item.type}</li>
-          <li>{item.price}</li>
+          <li>{item.price}</li> */}
         </ul>
-        <hr />
       </>
     ) : null
   )}
 </ul>
+<hr />
 
 
 
@@ -108,8 +108,34 @@ const resturauntDetails = (props) => {
 
         {/* <AuthorDate name={hoot.author.username} date={hoot.createdAt}/> */}
       </header>
-      <p>{restaurant.description}</p>
-      <section></section>
+
+     
+      <section>
+
+
+
+<section>
+        <h2>Comments</h2>
+        <CommentForm handleAddComment={handleAddComment} />
+        {/* {!restaurant.comments.length && <p>There are no comments.</p>} */}
+        {restaurant.comments.length === 0 ? (
+          <p>There are no comments.</p>
+        ) : (
+          <>
+            {restaurant.comments.map((comment) => {
+              return (
+                <div key={comment._id}>
+                
+                  <p> <b>{comment.authorName}</b> : {comment.text}</p>
+                </div>
+              );
+            })}
+          </>
+        )}
+      </section>
+
+
+      </section>
     </main>
   );
 };
