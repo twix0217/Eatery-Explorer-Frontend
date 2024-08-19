@@ -29,6 +29,22 @@ const show = async (restaurantId) => {
 };
 
 // Create a new restaurant
+const getOwnerById = async (ownerId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/owners/${ownerId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch owner');
+    }
+    return response.json();
+  } catch (error) {
+    console.log('Error fetching owner:', error);
+  }
+};
+
+
+
 const create = async (formData) => {
   const options = {
     method: 'POST',
@@ -68,4 +84,5 @@ const update = async (restaurantId, formData) => {
   }
 };
 
-export default { index, show, create, update };
+export default { index, show, create, getOwnerById ,update };
+
