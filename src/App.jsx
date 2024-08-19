@@ -29,7 +29,6 @@ const App = () => {
       setRestaurants(restaurantData);
     }
     if (user) {
-      // fetch the hoots
       getRestaurants();
     }
   }, [user]);
