@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import authService from "./services/authService";
 import hootService from "./services/hootService";
 import FoodDetails from "./components/foodDetails/foodDetails";
-import OwnerDetails from "./components/OwnerDetails/OwnerDetails";
+
 
 // Components
 import NavBar from "./components/NavBar/NavBar";
@@ -15,6 +15,8 @@ import HootList from "./components/HootList/HootList";
 import HootDetails from "./components/HootDetails/HootDetails";
 import HootForm from "./components/HootForm/HootForm";
 import UpdateForm from "./components/HootForm/UpdateForm";
+import OwnerDetails from "./components/OwnerDetails/OwnerDetails";
+import AddFoodForm from "./components/AddFoodForm/AddFoodForm";
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
@@ -70,13 +72,29 @@ const App = () => {
     }
   };
 
+
   const handleDeleteRestaurant = async (restaurantId) => {
     try {
       const deletedRestaurant = await hootService.deleter(restaurantId);
       getRestaurants();
       navigate(`/owners/${user.id}`);
+      catch (error) {
+      console.error("Error deleting food:", error);
+    }
+  };
+
+  const handleAddFood = async (restaurantId, formData) => {
+    try {
+      const updatedRestaurant = await hootService.addFood(restaurantId, formData);
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.map((restaurant) =>
+          restaurant._id === restaurantId ? updatedRestaurant : restaurant
+        )
+      );
+      navigate(`/restaurants/${restaurantId}`);
+
     } catch (error) {
-      console.error("Error updating restaurant:", error);
+      console.error("Error adding food:", error);
     }
   };
 
@@ -113,12 +131,12 @@ const App = () => {
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
             />
-            <Route
-              path="/restaurants/:restaurantId/edit"
-              element={
-                <UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />
-              }
-            />
+            <Route path="/owners/:ownerId" element={<OwnerDetails />} />
+           <Route path="/restaurants/:restaurantId/edit" element={<UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
+           <Route
+            path="/restaurants/:restaurantId/add-food"
+             element={<AddFoodForm handleAddFood={handleAddFood} />}
+/>
           </>
         ) : (
           // Public Route:
