@@ -12,26 +12,31 @@ import CommentForm from "../CommentForm/CommentForm";
 const foodDetails = (props) => {
   const { restaurantId, foodId } = useParams();
 
-  const [food, setFood] = useState({});
+  const [food, setFood] = useState(null);
+  const [restoId, setRestoId] = useState(null);
+
 
   useEffect(() => {
     async function getFood() {
       const foodData = await hootService.showFood(restaurantId, foodId);
       setFood(foodData);
-      console.log("yi i", foodData);
+      //console.log("yi i", food);
+      setRestoId(restaurantId);
     }
     getFood();
+    
   }, [foodId]);
 
   const handleAddComment = async (formData) => {
     const newComment = await commentService.createFC(
-      props.restaurantsId,
+      restaurantId,
       foodId,
       formData
     );
 
     const copyFood = { ...food };
     copyFood.comments.push(newComment);
+    setFood(copyFood);
   };
 
   if (!food) {
@@ -40,100 +45,38 @@ const foodDetails = (props) => {
 
   return (
     <>
+      <h4>{food.name}</h4>
       <ul>
-        <li>{food.name}</li>
+        <li>dish type : {food.type}</li>
+        <li>dish description :{food.description}</li>
+        <li>price : {food.price}</li>
       </ul>
+
+      {food.comments.length === 0 ? (
+        <>
+          <h4>no comments yet</h4>
+          <CommentForm handleAddComment={handleAddComment} />
+        </>
+      ) : (
+        <>
+          <ul>
+            <h4>comments:</h4>
+
+            <CommentForm handleAddComment={handleAddComment} />
+            {food.comments.map((comment) => {
+              return (
+                <li key={comment._id}>
+                  <p>
+                    {" "}
+                    <b>{comment.authorName}</b> : {comment.text}
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
     </>
   );
-  // return (
-  //   <main>
-  //     <header>
-  //       <h1>{restaurant.name.toUpperCase()}</h1>
-  //       <h1>{restaurant.type}</h1>
-  //       <h3>description: {restaurant.describtion}</h3>
-  //       <h3>location: {restaurant.location}</h3>
-  //       <h3>cuisine: {restaurant.cuisine}</h3>
-
-  //       <ul>
-  //         <p>main dishes :</p>
-  //         {restaurant.menu.map((item) =>
-  //           item.type === "main" ? (
-  //             <>
-  //               <ul>
-  //                 <li>{item.name}</li>
-  //                 {/* <li>{item.description}</li>
-  //         <li>{item.type}</li>
-  //         <li>{item.price}</li> */}
-  //               </ul>
-  //             </>
-  //           ) : null
-  //         )}
-  //       </ul>
-  //       <hr />
-  //       <br />
-
-  //       <ul>
-  //         <p>side dishes :</p>
-  //         {restaurant.menu.map((item) =>
-  //           item.type === "side" ? (
-  //             <>
-  //               <ul>
-  //                 <li>{item.name}</li>
-  //                 {/* <li>{item.description}</li>
-  //         <li>{item.type}</li>
-  //         <li>{item.price}</li> */}
-  //               </ul>
-  //             </>
-  //           ) : null
-  //         )}
-  //       </ul>
-  //       <hr />
-  //       <br />
-  //       <ul>
-  //         <p>drinks :</p>
-  //         {restaurant.menu.map((item) =>
-  //           item.type === "Drinks" ? (
-  //             <>
-  //               <ul>
-  //                 <li>{item.name}</li>
-  //                 {/* <li>{item.description}</li>
-  //         <li>{item.type}</li>
-  //         <li>{item.price}</li> */}
-  //               </ul>
-  //             </>
-  //           ) : null
-  //         )}
-  //       </ul>
-  //       <hr />
-
-  //       {/* <AuthorDate name={hoot.author.username} date={hoot.createdAt}/> */}
-  //     </header>
-
-  //     <section>
-  //       <section>
-  //         <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
-  //         <CommentForm handleAddComment={handleAddComment} />
-  //         {/* {!restaurant.comments.length && <p>There are no comments.</p>} */}
-  //         {restaurant.comments.length === 0 ? (
-  //           <p>There are no comments.</p>
-  //         ) : (
-  //           <>
-  //             {restaurant.comments.map((comment) => {
-  //               return (
-  //                 <div key={comment._id}>
-  //                   <p>
-  //                     {" "}
-  //                     <b>{comment.authorName}</b> : {comment.text}
-  //                   </p>
-  //                 </div>
-  //               );
-  //             })}
-  //           </>
-  //         )}
-  //       </section>
-  //     </section>
-  //   </main>
-  // );
 };
-
 export default foodDetails;
