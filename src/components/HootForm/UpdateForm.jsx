@@ -6,7 +6,7 @@ const UpdateForm = ({ handleUpdateRestaurant }) => {
   const [formData, setFormData] = useState({
     name: '',
     location: '',
-    description: '',
+    describtion: '',
     cuisine: '',
   });
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const UpdateForm = ({ handleUpdateRestaurant }) => {
       setFormData({
         name: data.name,
         location: data.location,
-        description: data.description,
+        describtion: data.describtion,
         cuisine: data.cuisine,
       });
     }
@@ -50,12 +50,12 @@ const UpdateForm = ({ handleUpdateRestaurant }) => {
           value={formData.name}
           onChange={handleChange}
         />
-        <label htmlFor="description">Description:</label>
+        <label htmlFor="describtion">Description:</label>
         <textarea
           required
-          name="description"
-          id="description"
-          value={formData.description}
+          name="describtion"
+          id="describtion"
+          value={formData.describtion}
           onChange={handleChange}
         />
         <label htmlFor="location">Location:</label>

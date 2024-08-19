@@ -45,6 +45,7 @@ const resturauntDetails = (props) => {
 
   return (
     <main>
+
       <header>
         <h1>{restaurant.name.toUpperCase()}</h1>
         <h1>{restaurant.type}</h1>
@@ -117,7 +118,7 @@ const resturauntDetails = (props) => {
       <section>
 
 
-
+ <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link>
 <section>
         <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
         <CommentForm handleAddComment={handleAddComment} />
