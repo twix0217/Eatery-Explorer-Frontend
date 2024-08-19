@@ -1,18 +1,16 @@
 import { Link } from 'react-router-dom';
-// editing
 
 const NavBar = ({ user, handleSignout }) => {
   return (
     <>
-      { user ? (
+      {user ? (
         <nav>
           <ul>
-            <li> <Link to="/">Home</Link> </li>
-            <li> <Link to='/restaurants'>View all Restarunts</Link> </li>
-            <li> <Link onClick={handleSignout} to="">Sign Out</Link> </li>
-
-            <li> <Link to="/restaurants/new">New Restarunt</Link> </li>
-
+            <li><Link to="/">Home</Link></li>
+            <li><Link to='/restaurants'>View all Restaurants</Link></li>
+            <li><Link onClick={handleSignout} to="">Sign Out</Link></li>
+            <li><Link to={`/owners/${user.id}`}>View My Restaurants</Link></li>
+            <li><Link to="/restaurants/new">New Restaurant</Link></li>
           </ul>
         </nav>
       ) : (
@@ -24,8 +22,7 @@ const NavBar = ({ user, handleSignout }) => {
         </nav>
       )}
     </>
-  )
-}
-//
+  );
+};
 
 export default NavBar;
