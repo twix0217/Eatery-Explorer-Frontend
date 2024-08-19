@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import authService from "./services/authService";
 import hootService from "./services/hootService";
 import FoodDetails from "./components/foodDetails/foodDetails";
+import OwnerDetails from "./components/OwnerDetails/OwnerDetails";
 
 // Components
 import NavBar from "./components/NavBar/NavBar";
@@ -15,13 +16,11 @@ import HootDetails from "./components/HootDetails/HootDetails";
 import HootForm from "./components/HootForm/HootForm";
 import UpdateForm from "./components/HootForm/UpdateForm";
 
-
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
   const [restaurants, setRestaurants] = useState([]);
   const navigate = useNavigate();
   const [resId, setRestId] = useState(null);
-
 
   useEffect(() => {
     async function getRestaurants() {
@@ -46,7 +45,10 @@ const App = () => {
 
   const handleUpdateRestaurant = async (restaurantId, formData) => {
     try {
-      const updatedRestaurant = await hootService.update(restaurantId, formData);
+      const updatedRestaurant = await hootService.update(
+        restaurantId,
+        formData
+      );
       setRestaurants((prevRestaurants) =>
         prevRestaurants.map((restaurant) =>
           restaurant._id === restaurantId ? updatedRestaurant : restaurant
@@ -54,10 +56,10 @@ const App = () => {
       );
       navigate(`/restaurants/${restaurantId}`);
     } catch (error) {
-      console.error('Error updating restaurant:', error);
+      console.error("Error updating restaurant:", error);
     }
   };
-  
+
   return (
     <>
       <NavBar user={user} handleSignout={handleSignout} />
@@ -65,17 +67,32 @@ const App = () => {
         {user ? (
           // Protected Routes:
           <>
-            <Route path="/" element={<Dashboard user={user} />} />
-            <Route path="/restaurants" element={<HootList restaurants={restaurants} />} />
-            <Route path="/restaurants/:restaurantsId" element={<HootDetails setRestId={setRestId} user={user}/>}  />
+            <Route path="/owners/:ownerId" element={<OwnerDetails />} />
 
-            <Route path={`/restaurants/:restaurantId/menu/:foodId`} element={<FoodDetails restaurants={restaurants} resId={resId}/>} />
+            <Route path="/" element={<Dashboard user={user} />} />
+            <Route
+              path="/restaurants"
+              element={<HootList restaurants={restaurants} />}
+            />
+            <Route
+              path="/restaurants/:restaurantsId"
+              element={<HootDetails setRestId={setRestId} user={user} />}
+            />
+
+            <Route
+              path={`/restaurants/:restaurantId/menu/:foodId`}
+              element={<FoodDetails restaurants={restaurants} resId={resId} />}
+            />
             <Route
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
             />
-           <Route path="/restaurants/:restaurantId/edit" element={<UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
-
+            <Route
+              path="/restaurants/:restaurantId/edit"
+              element={
+                <UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />
+              }
+            />
           </>
         ) : (
           // Public Route:
