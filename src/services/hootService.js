@@ -107,7 +107,7 @@ const showFood = async (restaurantId, foodId) => {
     console.log(error);
   }
 };
-
+// add food
 const addFood = async (restaurantId, foodData) => {
   const token = localStorage.getItem('token');
   const response = await fetch(`${BASE_URL}/${restaurantId}/menu`, { 
@@ -128,4 +128,5 @@ const addFood = async (restaurantId, foodData) => {
 
 
 
-export default { index, show, create, getOwnerById, showFood, update, addFood};
+
+export default { index, show, create, getOwnerById, showFood, update, addFood, deleter};
