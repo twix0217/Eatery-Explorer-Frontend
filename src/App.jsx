@@ -12,6 +12,8 @@ import SigninForm from "./components/SigninForm/SigninForm";
 import HootList from "./components/HootList/HootList";
 import HootDetails from "./components/HootDetails/HootDetails";
 import HootForm from "./components/HootForm/HootForm";
+import UpdateForm from "./components/HootForm/UpdateForm";
+
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
@@ -40,6 +42,20 @@ const App = () => {
     navigate("/restaurants");
   };
 
+  const handleUpdateRestaurant = async (restaurantId, formData) => {
+    try {
+      const updatedRestaurant = await hootService.update(restaurantId, formData);
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.map((restaurant) =>
+          restaurant._id === restaurantId ? updatedRestaurant : restaurant
+        )
+      );
+      navigate(`/restaurants/${restaurantId}`);
+    } catch (error) {
+      console.error('Error updating restaurant:', error);
+    }
+  };
+  
   return (
     <>
       <NavBar user={user} handleSignout={handleSignout} />
@@ -49,11 +65,13 @@ const App = () => {
           <>
             <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/restaurants" element={<HootList restaurants={restaurants} />} />
-            <Route path="/restaurants/:restaurantsId" element={<HootDetails />} />
+            <Route path="/restaurants/:restaurantId" element={<HootDetails />} />
             <Route
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
             />
+           <Route path="/restaurants/:restaurantId/edit" element={<UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
+
           </>
         ) : (
           // Public Route:
@@ -67,4 +85,3 @@ const App = () => {
 };
 
 export default App;
-//
