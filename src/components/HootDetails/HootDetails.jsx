@@ -119,6 +119,7 @@ const resturauntDetails = (props) => {
 
 
  <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link>
+ <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
 <section>
         <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
         <CommentForm handleAddComment={handleAddComment} />

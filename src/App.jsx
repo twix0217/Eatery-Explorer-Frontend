@@ -14,7 +14,7 @@ import HootList from "./components/HootList/HootList";
 import HootDetails from "./components/HootDetails/HootDetails";
 import HootForm from "./components/HootForm/HootForm";
 import UpdateForm from "./components/HootForm/UpdateForm";
-
+import OwnerDetails from "./components/OwnerDetails/OwnerDetails";
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
@@ -74,8 +74,9 @@ const App = () => {
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
             />
+            <Route path="/owners/:ownerId" element={<OwnerDetails />} />
            <Route path="/restaurants/:restaurantId/edit" element={<UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
-
+           <Route path="/restaurants/:restaurantId/add-food" component={AddFoodForm} />
           </>
         ) : (
           // Public Route:
