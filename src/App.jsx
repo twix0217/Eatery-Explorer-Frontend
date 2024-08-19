@@ -13,7 +13,8 @@ import SigninForm from "./components/SigninForm/SigninForm";
 import HootList from "./components/HootList/HootList";
 import HootDetails from "./components/HootDetails/HootDetails";
 import HootForm from "./components/HootForm/HootForm";
-import OwnerDetails from "./components/OwnerDetails/OwnerDetails"; 
+import UpdateForm from "./components/HootForm/UpdateForm";
+
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
@@ -28,7 +29,7 @@ const App = () => {
       setRestaurants(restaurantData);
     }
     if (user) {
-      // fetch the restaurants
+      // fetch the hoots
       getRestaurants();
     }
   }, [user]);
@@ -44,6 +45,20 @@ const App = () => {
     navigate("/restaurants");
   };
 
+  const handleUpdateRestaurant = async (restaurantId, formData) => {
+    try {
+      const updatedRestaurant = await hootService.update(restaurantId, formData);
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.map((restaurant) =>
+          restaurant._id === restaurantId ? updatedRestaurant : restaurant
+        )
+      );
+      navigate(`/restaurants/${restaurantId}`);
+    } catch (error) {
+      console.error('Error updating restaurant:', error);
+    }
+  };
+  
   return (
     <>
       <NavBar user={user} handleSignout={handleSignout} />
@@ -60,16 +75,15 @@ const App = () => {
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
             />
-            <Route path="/owners/:ownerId" element={<OwnerDetails />} /> 
+           <Route path="/restaurants/:restaurantId/edit" element={<UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
+
           </>
         ) : (
-          // Public Routes:
-          <>
-            <Route path="/" element={<Landing />} />
-            <Route path="/signup" element={<SignupForm setUser={setUser} />} />
-            <Route path="/signin" element={<SigninForm setUser={setUser} />} />
-          </>
+          // Public Route:
+          <Route path="/" element={<Landing />} />
         )}
+        <Route path="/signup" element={<SignupForm setUser={setUser} />} />
+        <Route path="/signin" element={<SigninForm setUser={setUser} />} />
       </Routes>
     </>
   );

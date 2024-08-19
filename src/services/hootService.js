@@ -1,62 +1,86 @@
 const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/restaurants`;
 
+// Fetch all restaurants
 const index = async () => {
   try {
     const res = await fetch(BASE_URL, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
+    if (!res.ok) throw new Error("Failed to fetch restaurants");
     return res.json();
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching restaurants:", error);
+    return [];
   }
 };
 
+// Fetch a specific restaurant by ID
 const show = async (restaurantId) => {
   try {
     const res = await fetch(`${BASE_URL}/${restaurantId}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
+    if (!res.ok) throw new Error("Failed to fetch restaurant");
     return res.json();
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching restaurant:", error);
+    return null;
   }
 };
 
+// Create a new restaurant
 const getOwnerById = async (ownerId) => {
   try {
     const response = await fetch(`${BASE_URL}/owners/${ownerId}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch owner');
+      throw new Error("Failed to fetch owner");
     }
     return response.json();
   } catch (error) {
-    console.log('Error fetching owner:', error);
+    console.log("Error fetching owner:", error);
   }
 };
 
-
+// Update an existing restaurant
+const update = async (restaurantId, formData) => {
+  const options = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  };
+  try {
+    const res = await fetch(`${BASE_URL}/${restaurantId}`, options);
+    if (!res.ok) throw new Error("Failed to update restaurant");
+    return res.json();
+  } catch (error) {
+    console.error("Error updating restaurant:", error);
+    return null;
+  }
+};
 
 const create = async (formData) => {
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-              'Content-Type': 'application/json',
-            },
-    body: JSON.stringify(formData)
-  }
-  const res = await fetch(BASE_URL, options)
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  };
+  const res = await fetch(BASE_URL, options);
 
-  return res.json()
-}
+  return res.json();
+};
 
-
-const showFood = async (restaurantId,foodId) => {
+const showFood = async (restaurantId, foodId) => {
   try {
     const res = await fetch(`${BASE_URL}/${restaurantId}/menu/${foodId}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     return res.json();
   } catch (error) {
@@ -64,5 +88,4 @@ const showFood = async (restaurantId,foodId) => {
   }
 };
 
-
-export default { index, show, create, getOwnerById , showFood };
+export default { index, show, create, getOwnerById, showFood, update };
