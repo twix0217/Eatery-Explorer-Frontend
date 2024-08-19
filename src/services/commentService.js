@@ -30,7 +30,7 @@ const createFC = async (restaurantId, foodId, formData) => {
       body: JSON.stringify(formData),
     };
 
-    const res = await fetch(`${BASE_URL}/${restaurantId}/menu/${foodId}`, data);
+    const res = await fetch(`${BASE_URL}/${restaurantId}/menu/${foodId}/comments`, data);
 
     return res.json();
   } catch (e) {

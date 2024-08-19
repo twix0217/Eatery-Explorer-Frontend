@@ -27,7 +27,7 @@ const resturauntDetails = (props) => {
   }, [restaurantsId]);
 
   const handleAddComment = async (formData) => {
-    const newComment = await commentService.create(restaurantsId, formData);
+    const newComment = await commentService.createFC(restaurantsId, formData);
 
     const copyRestaurant = { ...restaurant };
     copyRestaurant.comments.push(newComment);
