@@ -4,7 +4,7 @@ const restaurantForm = ({ handleAddRestaurant }) => {
   const [formData, setFormData] = useState({
     name: '',
     location: '',
-    description: '',
+    describtion: '',
     cuisine: 'italian',
   });
 
@@ -30,11 +30,10 @@ const restaurantForm = ({ handleAddRestaurant }) => {
           value={formData.title}
           onChange={handleChange}
         />
-        <label htmlFor="description">description</label>
+        <label htmlFor="describtion">description</label>
         <textarea
           required
-          type="description"
-          name="description"
+          name="describtion"
           id="text-input"
           value={formData.text}
           onChange={handleChange}
