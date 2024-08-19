@@ -35,9 +35,9 @@ const App = () => {
   };
 
   const handleAddRestaurant = async (formData) => {
-    const newHoot = await hootService.create(formData);
-    setHoots([...hoots, newHoot]);
-    navigate("/hoots");
+    const newRestaurant = await hootService.create(formData);
+    setRestaurants([...restaurants, newRestaurant]);
+    navigate("/restaurants");
   };
 
   return (
