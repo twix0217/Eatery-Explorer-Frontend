@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import { Link } from 'react-router-dom';
+import FoodDetails from "../foodDetails/foodDetails";
 // Services
 import hootService from "../../services/hootService";
 import commentService from "../../services/commentService";
@@ -8,20 +9,31 @@ import commentService from "../../services/commentService";
 // Components
 import AuthorDate from "../common/AuthorDate";
 import CommentForm from "../CommentForm/CommentForm";
-import { Link } from "react-router-dom";
 
-const HootDetails = (props) => {
-  const { restaurantId } = useParams();
-  const [restaurant, setRestaurant] = useState(null); // Initialize state to null
+
+
+const resturauntDetails = (props) => {
+  const { restaurantsId } = useParams();
+  const [restaurant, setRestaurant] = useState(null);
 
   useEffect(() => {
     async function getRestaurant() {
-      const restaurantData = await hootService.show(restaurantId);
+      const restaurantData = await hootService.show(restaurantsId);
       console.log(restaurantData);
       setRestaurant(restaurantData);
+      props.setRestId(restaurantsId);
     }
     getRestaurant();
-  }, [restaurantId]);
+  }, [restaurantsId]);
+
+  const handleAddComment = async (formData) => {
+    const newComment = await commentService.create(restaurantsId, formData);
+
+    const copyRestaurant = { ...restaurant };
+    copyRestaurant.comments.push(newComment);
+
+    setRestaurant(copyRestaurant);
+  };
 
   if (!restaurant) {
     return (
@@ -31,100 +43,105 @@ const HootDetails = (props) => {
     );
   }
 
-  const handleAddComment = async (formData) => {
-    const newComment = await commentService.create(restaurantId, formData);
-
-    const updatedRestaurant = { ...restaurant };
-    updatedRestaurant.comments.push(newComment);
-
-    setRestaurant(updatedRestaurant);
-  };
-
-  const handleUpdateComment = async (formData) => {
-    const newComment = await commentService.create(restaurantId, formData);
-
-    const updatedRestaurant = { ...restaurant };
-    updatedRestaurant.comments.push(newComment);
-
-    setRestaurant(updatedRestaurant);
-  };
-
   return (
     <main>
       <header>
         <h1>{restaurant.name.toUpperCase()}</h1>
         <h1>{restaurant.type}</h1>
-        <h3>Description: {restaurant.describtion}</h3>
-        <h3>Location: {restaurant.location}</h3>
-        <h3>Cuisine: {restaurant.cuisine}</h3>
-
-        {/* Dishes and Menu rendering */}
-        <ul>
-          <p>Main dishes:</p>
-          {restaurant.menu.map((item) =>
-            item.type === "main" ? (
-              <ul key={item.name}>
-                <li>{item.name}</li>
-              </ul>
-            ) : null
-          )}
-        </ul>
-        <hr />
-        <br />
+        <h3>description: {restaurant.describtion}</h3>
+        <h3>location: {restaurant.location}</h3>
+        <h3>cuisine: {restaurant.cuisine}</h3>
 
         <ul>
-          <p>Side dishes:</p>
-          {restaurant.menu.map((item) =>
-            item.type === "side" ? (
-              <ul key={item.name}>
-                <li>{item.name}</li>
-              </ul>
-            ) : null
-          )}
-        </ul>
-        <hr />
-        <br />
-
+          <p>main dishes :</p>
+  {restaurant.menu.map((item) =>
+    item.type === "main" ? (
+      <>
         <ul>
-          <p>Drinks:</p>
-          {restaurant.menu.map((item) =>
-            item.type === "Drinks" ? (
-              <ul key={item.name}>
-                <li>{item.name}</li>
-              </ul>
-            ) : null
-          )}
+          <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
+          {/* <li>{item.description}</li>
+          <li>{item.type}</li>
+          <li>{item.price}</li> */}
         </ul>
-        <hr />
+      </>
+    ) : null
+  )}
+</ul>
+<hr />
+<br />
+
+<ul>
+
+          <p>side dishes :</p>
+  {restaurant.menu.map((item) =>
+    item.type === "side" ? (
+      <>
+        <ul>
+          <li>{item.name}</li>
+          {/* <li>{item.description}</li>
+          <li>{item.type}</li>
+          <li>{item.price}</li> */}
+        </ul>
+      </>
+    ) : null
+  )}
+</ul>
+<hr />
+<br />
+<ul>
+
+          <p>drinks :</p>
+  {restaurant.menu.map((item) =>
+    item.type === "Drinks" ? (
+      <>
+        <ul>
+          <li>{item.name}</li>
+          {/* <li>{item.description}</li>
+          <li>{item.type}</li>
+          <li>{item.price}</li> */}
+        </ul>
+      </>
+    ) : null
+  )}
+</ul>
+<hr />
+
+
+
+
+
+        {/* <AuthorDate name={hoot.author.username} date={hoot.createdAt}/> */}
       </header>
 
+     
       <section>
+
+
+
+<section>
         <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
         <CommentForm handleAddComment={handleAddComment} />
+        {/* {!restaurant.comments.length && <p>There are no comments.</p>} */}
         {restaurant.comments.length === 0 ? (
           <p>There are no comments.</p>
         ) : (
           <>
-            {restaurant.comments.map((comment) => (
-              <div key={comment._id}>
-                <p>
-                  <b>{comment.authorName}</b> : {comment.text}
-                </p>
-              </div>
-            ))}
+            {restaurant.comments.map((comment) => {
+              return (
+                <div key={comment._id}>
+                
+                  <p> <b>{comment.authorName}</b> : {comment.text}</p>
+                </div>
+              );
+            })}
           </>
         )}
       </section>
-      <section>
-        <>
-      
 
-      <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link>
-        </>
+
       </section>
     </main>
   );
-  
 };
 
-export default HootDetails;
+export default resturauntDetails;
