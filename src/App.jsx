@@ -67,7 +67,7 @@ const App = () => {
           <>
             <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/restaurants" element={<HootList restaurants={restaurants} />} />
-            <Route path="/restaurants/:restaurantsId" element={<HootDetails setRestId={setRestId}/>}  />
+            <Route path="/restaurants/:restaurantsId" element={<HootDetails setRestId={setRestId} user={user}/>}  />
 
             <Route path={`/restaurants/:restaurantId/menu/:foodId`} element={<FoodDetails restaurants={restaurants} resId={resId}/>} />
             <Route
