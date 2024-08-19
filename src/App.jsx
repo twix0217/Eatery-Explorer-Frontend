@@ -49,7 +49,7 @@ const App = () => {
           <>
             <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/restaurants" element={<HootList restaurants={restaurants} />} />
-            <Route path="/hoots/:hootId" element={<HootDetails />} />
+            <Route path="/restaurants/:restaurantsId" element={<HootDetails />} />
             <Route
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
