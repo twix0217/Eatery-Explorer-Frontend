@@ -12,6 +12,7 @@ import SigninForm from "./components/SigninForm/SigninForm";
 import HootList from "./components/HootList/HootList";
 import HootDetails from "./components/HootDetails/HootDetails";
 import HootForm from "./components/HootForm/HootForm";
+import OwnerDetails from "./components/OwnerDetails/OwnerDetails"; 
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
@@ -24,7 +25,7 @@ const App = () => {
       setRestaurants(restaurantData);
     }
     if (user) {
-      // fetch the hoots
+      // fetch the restaurants
       getRestaurants();
     }
   }, [user]);
@@ -54,17 +55,19 @@ const App = () => {
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
             />
+            <Route path="/owners/:ownerId" element={<OwnerDetails />} /> 
           </>
         ) : (
-          // Public Route:
-          <Route path="/" element={<Landing />} />
+          // Public Routes:
+          <>
+            <Route path="/" element={<Landing />} />
+            <Route path="/signup" element={<SignupForm setUser={setUser} />} />
+            <Route path="/signin" element={<SigninForm setUser={setUser} />} />
+          </>
         )}
-        <Route path="/signup" element={<SignupForm setUser={setUser} />} />
-        <Route path="/signin" element={<SigninForm setUser={setUser} />} />
       </Routes>
     </>
   );
 };
 
 export default App;
-//
