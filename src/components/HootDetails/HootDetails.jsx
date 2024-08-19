@@ -52,6 +52,9 @@ const resturauntDetails = (props) => {
         <h3>description: {restaurant.describtion}</h3>
         <h3>location: {restaurant.location}</h3>
         <h3>cuisine: {restaurant.cuisine}</h3>
+        
+        {props.user.id===restaurant.owner ? <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link> : null}
+
 
         <ul>
           <p>main dishes :</p>
@@ -118,7 +121,6 @@ const resturauntDetails = (props) => {
       <section>
 
 
- <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link>
 <section>
         <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
         <CommentForm handleAddComment={handleAddComment} />
