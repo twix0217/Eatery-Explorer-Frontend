@@ -115,7 +115,7 @@ const resturauntDetails = (props) => {
 
 
 <section>
-        <h2>Comments</h2>
+        <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
         <CommentForm handleAddComment={handleAddComment} />
         {/* {!restaurant.comments.length && <p>There are no comments.</p>} */}
         {restaurant.comments.length === 0 ? (
