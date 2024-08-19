@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const AddFoodForm = ({ handleAddFood }) => {
-  const { restaurantId } = useParams(); // Get the restaurantId from the URL
+  const { restaurantId } = useParams(); 
   const [formData, setFormData] = useState({
     name: '',
-    type: 'Appetizer', // Default value
+    type: '',
     description: '',
     price: '',
   });
@@ -16,7 +16,7 @@ const AddFoodForm = ({ handleAddFood }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    handleAddFood(restaurantId, formData); // Pass restaurantId to the handler
+    handleAddFood(restaurantId, formData); 
   };
 
   return (

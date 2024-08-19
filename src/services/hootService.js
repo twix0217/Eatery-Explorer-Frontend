@@ -88,4 +88,24 @@ const showFood = async (restaurantId, foodId) => {
   }
 };
 
-export default { index, show, create, getOwnerById, showFood, update };
+const addFood = async (restaurantId, foodData) => {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`${BASE_URL}/${restaurantId}/menu`, { 
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(foodData),
+  });
+
+  if (!response.ok) throw new Error('Failed to add food'); 
+
+  return response.json();
+};
+
+
+
+
+
+export default { index, show, create, getOwnerById, showFood, update, addFood};

@@ -49,65 +49,59 @@ const resturauntDetails = (props) => {
       <header>
         <h1>{restaurant.name.toUpperCase()}</h1>
         <h1>{restaurant.type}</h1>
-        <h3>description: {restaurant.describtion}</h3>
+        <h3>Description: {restaurant.description}</h3>
         <h3>location: {restaurant.location}</h3>
         <h3>cuisine: {restaurant.cuisine}</h3>
-        
-        {props.user.id===restaurant.owner ? <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link> : null}
-
 
         <ul>
-          <p>main dishes :</p>
-  {restaurant.menu.map((item) =>
-    item.type === "main" ? (
-      <>
+  {restaurant.menu
+    .filter(item => item.type === "Main Course") 
+    .map(item => (
+      <li key={item._id}>
+        <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
         <ul>
-          <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
-          {/* <li>{item.description}</li>
-          <li>{item.type}</li>
-          <li>{item.price}</li> */}
+          <li>Description: {item.description}</li>
+          <li>Type: {item.type}</li>
+          <li>Price: ${item.price}</li>
         </ul>
-      </>
-    ) : null
-  )}
+      </li>
+    ))}
 </ul>
 <hr />
 <br />
 
 <ul>
-
-          <p>side dishes :</p>
-  {restaurant.menu.map((item) =>
-    item.type === "side" ? (
-      <>
+  {restaurant.menu
+    .filter(item => item.type === "Side") 
+    .map(item => (
+      <li key={item._id}>
+        <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
         <ul>
-        <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
-        {/* <li>{item.description}</li>
-          <li>{item.type}</li>
-          <li>{item.price}</li> */}
+          <li>Description: {item.description}</li>
+          <li>Type: {item.type}</li>
+          <li>Price: ${item.price}</li>
         </ul>
-      </>
-    ) : null
-  )}
+      </li>
+    ))}
 </ul>
+
 <hr />
 <br />
 <ul>
-
-          <p>drinks :</p>
-  {restaurant.menu.map((item) =>
-    item.type === "Drinks" ? (
-      <>
+  {restaurant.menu
+    .filter(item => item.type === "Beverage") // Ensure this matches your AddFoodForm
+    .map(item => (
+      <li key={item._id}>
+        <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
         <ul>
-        <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
-        {/* <li>{item.description}</li>
-          <li>{item.type}</li>
-          <li>{item.price}</li> */}
+          <li>Description: {item.description}</li>
+          <li>Type: {item.type}</li>
+          <li>Price: ${item.price}</li>
         </ul>
-      </>
-    ) : null
-  )}
+      </li>
+    ))}
 </ul>
+
 <hr />
 
 
@@ -122,6 +116,7 @@ const resturauntDetails = (props) => {
 
 
  <Link to={`/restaurants/${restaurant._id}/edit`}>Edit Restaurant</Link>
+ <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
 <section>
         <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
         <CommentForm handleAddComment={handleAddComment} />
