@@ -77,8 +77,8 @@ const resturauntDetails = (props) => {
     item.type === "side" ? (
       <>
         <ul>
-          <li>{item.name}</li>
-          {/* <li>{item.description}</li>
+        <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
+        {/* <li>{item.description}</li>
           <li>{item.type}</li>
           <li>{item.price}</li> */}
         </ul>
@@ -95,8 +95,8 @@ const resturauntDetails = (props) => {
     item.type === "Drinks" ? (
       <>
         <ul>
-          <li>{item.name}</li>
-          {/* <li>{item.description}</li>
+        <li> <Link key={item._id} to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>  </li>
+        {/* <li>{item.description}</li>
           <li>{item.type}</li>
           <li>{item.price}</li> */}
         </ul>
