@@ -145,4 +145,5 @@ const updateFood = async (restaurantId, foodId, foodData) => {
 
 
 
+
 export default { index, show, create, getOwnerById, showFood, update, addFood, deleter, updateFood};

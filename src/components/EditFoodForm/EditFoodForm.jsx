@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import hootService from '../../services/hootService';
 
 const EditFoodForm = ({ handleUpdateFood }) => {
   const { restaurantId, foodId } = useParams();
@@ -13,15 +14,12 @@ const EditFoodForm = ({ handleUpdateFood }) => {
 
   useEffect(() => {
     async function fetchFood() {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/restaurants/${restaurantId}/menu/${foodId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
-      const data = await response.json();
+      const food = await hootService.showFood(restaurantId, foodId);
       setFormData({
-        name: data.name,
-        type: data.type,
-        description: data.description,
-        price: data.price,
+        name: food.name,
+        type: food.type,
+        description: food.description,
+        price: food.price,
       });
     }
     fetchFood();

@@ -103,11 +103,7 @@ console.log(newRes);
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
-                {props.user.id === restaurant.owner && (
-                      <Link to={`/restaurants/${restaurant._id}/menu/${item._id}/edit`}>
-                        Edit 
-                      </Link>
-                    )}
+             
               </li>
             ))}
         </ul>
@@ -124,11 +120,7 @@ console.log(newRes);
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
-                {props.user.id === restaurant.owner && (
-                      <Link to={`/restaurants/${restaurant._id}/menu/${item._id}/edit`}>
-                        Edit 
-                      </Link>
-                    )}
+              
               </li>
             ))}
         </ul>
@@ -145,11 +137,7 @@ console.log(newRes);
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
-                {props.user.id === restaurant.owner && (
-                      <Link to={`/restaurants/${restaurant._id}/menu/${item._id}/edit`}>
-                        Edit 
-                      </Link>
-                    )}
+              
                 
               </li>
             ))}
@@ -167,11 +155,7 @@ console.log(newRes);
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
-                  {props.user.id === restaurant.owner && (
-                      <Link to={`/restaurants/${restaurant._id}/menu/${item._id}/edit`}>
-                        Edit 
-                      </Link>
-                    )}
+               
               </li>
             ))}
         </ul>

@@ -17,6 +17,7 @@ import HootForm from "./components/HootForm/HootForm";
 import UpdateForm from "./components/HootForm/UpdateForm";
 import OwnerDetails from "./components/OwnerDetails/OwnerDetails";
 import AddFoodForm from "./components/AddFoodForm/AddFoodForm";
+import EditFoodForm from "./components/EditFoodForm/EditFoodForm";
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
@@ -158,16 +159,10 @@ const App = () => {
             path="/restaurants/:restaurantId/add-food"
              element={<AddFoodForm handleAddFood={handleAddFood} />}
 />         
-<Route
-              path="/restaurants/:restaurantId/menu/:foodId"
-              element={
-                <FoodDetails
-                  restaurants={restaurants}
-                  resId={resId}
-                  handleUpdateFood={handleUpdateFood}
-                />
-              }
-            />
+   <Route
+        path="/restaurants/:restaurantId/menu/:foodId/edit"
+        element={<EditFoodForm handleUpdateFood={handleUpdateFood} />}
+      />
               
           </>
         ) : (

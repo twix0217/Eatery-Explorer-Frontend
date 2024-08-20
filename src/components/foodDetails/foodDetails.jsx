@@ -88,6 +88,13 @@ const foodDetails = (props) => {
         <li>dish type : {food.type}</li>
         <li>dish description :{food.description}</li>
         <li>price : {food.price}</li>
+        {props.user.id === food.owner && (
+          <li>
+            <Link to={`/restaurants/${restaurantId}/menu/${foodId}/edit`}>
+              Edit
+            </Link>
+          </li>
+        )}
       </ul>
 
       {food.comments.length === 0 ? (
