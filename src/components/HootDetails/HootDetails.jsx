@@ -24,6 +24,7 @@ const RestaurantDetails = (props) => {
     setRestaurant(restaurantData);
     setComment(restaurantData.comments);
     props.setRestId(restaurantsId);
+    props.setSelectedRestaurant(restaurantData);
   }
 
   useEffect(() => {

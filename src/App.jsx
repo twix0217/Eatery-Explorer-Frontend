@@ -23,6 +23,7 @@ const App = () => {
   const [restaurants, setRestaurants] = useState([]);
   const navigate = useNavigate();
   const [resId, setRestId] = useState(null);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   // console.log("thia ia app user",user)
 
   //-------------------------------------
@@ -146,7 +147,9 @@ const App = () => {
                 <HootDetails
                   setRestId={setRestId}
                   user={user}
+                  setSelectedRestaurant = {setSelectedRestaurant}
                   handleDeleteRestaurant={handleDeleteRestaurant}
+
                 />
               }
             />
@@ -158,6 +161,7 @@ const App = () => {
                   restaurants={restaurants}
                   resId={resId}
                   user={user}
+                  selectedRestaurant = {selectedRestaurant}
                 />
               }
             />
@@ -180,8 +184,9 @@ const App = () => {
               element={<AddFoodForm handleAddFood={handleAddFood} />}
             />
             <Route
-              path="/restaurants/:restaurantId/menu/:foodId"
-              element={<EditFoodForm handleUpdateFood={handleUpdateFood} />}
+              path="/restaurants/:restaurantId/menu/:foodId/edit"
+              element={<EditFoodForm handleUpdateFood={handleUpdateFood} selectedRestaurant = {selectedRestaurant}
+               />}
             />
           </>
         ) : (

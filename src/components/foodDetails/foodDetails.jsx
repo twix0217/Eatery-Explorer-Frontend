@@ -14,18 +14,18 @@ const foodDetails = (props) => {
 
   const [food, setFood] = useState(null);
   const [restoId, setRestoId] = useState(null);
-  const[restaurant, setRestaurant] = useState(null);
+  const[restaurant, setRestaurant] = useState(props.selectedRestaurant);
 
 
 
 
-  async function getRestaurant() {
-    const restaurantData = await hootService.show(restaurantId);
-    // console.log(restaurantData);
-    setRestaurant(restaurantData);
-    // setComment(restaurantData.comments);
-    // props.setRestId(restaurantsId);
-  }
+  // async function getRestaurant() {
+  //   const restaurantData = await hootService.show(restaurantId);
+  //   // console.log(restaurantData);
+  //   setRestaurant(restaurantData);
+  //   // setComment(restaurantData.comments);
+  //   // props.setRestId(restaurantsId);
+  // }
 
 
   useEffect(() => {
@@ -36,8 +36,8 @@ const foodDetails = (props) => {
       setRestoId(restaurantId);
     }
     getFood();
-    getRestaurant();
-  }, [foodId]);
+    // getRestaurant();
+  }, [foodId,restaurantId]);
 
   const handleAddComment = async (formData) => {
     const newComment = await commentService.createFC(
@@ -103,13 +103,13 @@ const foodDetails = (props) => {
         <li>dish description :{food.description}</li>
         <li>price : {food.price}</li>
         {props.user.id === restaurant.owner && (
-            <li>
-              <Link to={`/restaurants/${restaurantId}/menu/${foodId}`}>
-                Edit
-              </Link>
-            </li>
+           <p>
+            <Link to={`/restaurants/${restaurantId}/menu/${foodId}/edit`}>
+              Edit
+            </Link>
+            </p>
           )}
-
+          
       </ul>
 
       {food.comments.length === 0 ? (
