@@ -43,8 +43,8 @@ const signup = async (formData) => {
     });
 
     const json = await res.json();
-    if (json.err) {
-      throw new Error(json.err);
+    if (json.error) {
+      throw new Error(json.error);
     }
     if (json.token) {
       localStorage.setItem('token', json.token);
