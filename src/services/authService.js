@@ -4,16 +4,27 @@ const signout = () => {
   window.localStorage.removeItem('token');
 };
 
+const parseToken = (token) => {
+  if (!token) return null;
+  
+  try {
+    const rawPayload = token.split('.')[1]
+    const jsonPayload= window.atob(rawPayload)
+
+    const payload = JSON.parse(jsonPayload);
+    return payload;
+  } catch (error) {
+    return null
+  }
+}
 
 const getUser = () =>  {
   try {
     const token = localStorage.getItem('token');
+    
     if (!token) return null;
-
-    const rawPayload = token.split('.')[1]
-    const jsonPayload= window.atob(rawPayload)
-
-    const user = JSON.parse(jsonPayload);
+   
+    const user = parseToken(token)
     return user;
 
   } catch (err) {
@@ -30,16 +41,22 @@ const signup = async (formData) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
+
     const json = await res.json();
     if (json.err) {
       throw new Error(json.err);
     }
-    return json;
+    if (json.token) {
+      localStorage.setItem('token', json.token);
+    }
+    const user = parseToken(json.token)
+    return { user };
   } catch (err) {
     console.log(err);
     throw err;
   }
 };
+
 
 const signin = async (user) => {
   try {
@@ -73,5 +90,5 @@ const signin = async (user) => {
 };
 
 export default {
-  signup, signin, getUser, signout
+  signup, signin, getUser, signout, parseToken
 };

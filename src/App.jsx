@@ -23,6 +23,7 @@ const App = () => {
   const [restaurants, setRestaurants] = useState([]);
   const navigate = useNavigate();
   const [resId, setRestId] = useState(null);
+ // console.log("thia ia app user",user)
 
   //-------------------------------------
 
@@ -77,7 +78,7 @@ const App = () => {
     try {
       const deletedRestaurant = await hootService.deleter(restaurantId);
       getRestaurants();
-      navigate(`/owners/${user.id}`);
+      navigate(`restaurants/owner/${user.id}`);
     
   }  catch (error) {
     console.error("Error deleting food:", error);
@@ -131,7 +132,7 @@ const App = () => {
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
             />
-            <Route path="/owners/:ownerId" element={<OwnerDetails />} />
+            <Route path="restaurants/owner/:ownerId" element={<OwnerDetails />} />
            <Route path="/restaurants/:restaurantId/edit" element={<UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
            <Route
             path="/restaurants/:restaurantId/add-food"

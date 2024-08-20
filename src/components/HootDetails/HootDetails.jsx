@@ -40,7 +40,7 @@ const RestaurantDetails = (props) => {
     // console.log(res);
     // props.setRestId(null);
     await props.handleDeleteRestaurant(restaurantsId);
-    navigate(`/owners/${props.user.id}`);
+    //navigate(`restaurants/owner/${props.user.id}`);
   };
 
   const handleDelete = async (e) => {
@@ -67,6 +67,7 @@ const RestaurantDetails = (props) => {
         <h3>Location: {restaurant.location}</h3>
         <h3>Cuisine: {restaurant.cuisine}</h3>
 
+<hr />
         <ul>
           <h3>Main Course: </h3>
           {restaurant.menu
@@ -84,9 +85,26 @@ const RestaurantDetails = (props) => {
         <br />
 
         <ul>
-          <h3>Side:</h3>
+          <h3>Appetizer:</h3>
           {restaurant.menu
-            .filter((item) => item.type === "Side")
+            .filter((item) => item.type === "Appetizer")
+            .map((item) => (
+              <li key={item._id}>
+                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+        </ul>
+
+        <hr />
+        <br />
+
+        
+        <ul>
+          <h3>Desserts:</h3>
+          {restaurant.menu
+            .filter((item) => item.type === "Dessert")
             .map((item) => (
               <li key={item._id}>
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
