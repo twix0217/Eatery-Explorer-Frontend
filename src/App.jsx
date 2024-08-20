@@ -102,6 +102,8 @@ const App = () => {
   const handleUpdateFood = async (restaurantId, foodId, updatedFoodData) => {
     try {
       const updatedFood = await hootService.updateFood(restaurantId, foodId, updatedFoodData);
+      
+
       setRestaurants((prevRestaurants) =>
         prevRestaurants.map((restaurant) =>
           restaurant._id === restaurantId
@@ -114,12 +116,13 @@ const App = () => {
             : restaurant
         )
       );
-      navigate(`/restaurants/${restaurantId}/menu`);
+ 
+      navigate(`/restaurants/${restaurantId}/menu/${foodId}`);
     } catch (error) {
       console.error("Error updating food:", error);
     }
   };
-
+  
   return (
     <>
       <NavBar user={user} handleSignout={handleSignout} />
@@ -159,10 +162,8 @@ const App = () => {
             path="/restaurants/:restaurantId/add-food"
              element={<AddFoodForm handleAddFood={handleAddFood} />}
 />         
-   <Route
-        path="/restaurants/:restaurantId/menu/:foodId/edit"
-        element={<EditFoodForm handleUpdateFood={handleUpdateFood} />}
-      />
+<Route path="/restaurants/:restaurantId/menu/:foodId/edit" component={EditFoodForm} />
+
               
           </>
         ) : (

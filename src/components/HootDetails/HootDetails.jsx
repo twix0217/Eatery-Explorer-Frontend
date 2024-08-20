@@ -173,6 +173,13 @@ console.log(newRes);
         {props.user.id === restaurant.owner && (
           <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
         )}
+         {props.user.id === food.ownerId && (
+            <li>
+              <Link to={`/restaurants/${restaurantId}/menu/${foodId}/edit`}>
+                Edit
+              </Link>
+            </li>
+          )}
         {props.user.id === restaurant.owner ? (
           <form onSubmit={handlesubmitC} action="">
             <button type="submit">delete the restaurant</button>

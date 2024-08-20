@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // Services
 import hootService from "../../services/hootService";
 import commentService from "../../services/commentService";
-
+import { Link } from "react-router-dom";
 // Components
 import AuthorDate from "../common/AuthorDate";
 import CommentForm from "../CommentForm/CommentForm";
@@ -88,13 +88,8 @@ const foodDetails = (props) => {
         <li>dish type : {food.type}</li>
         <li>dish description :{food.description}</li>
         <li>price : {food.price}</li>
-        {props.user.id === food.owner && (
-          <li>
-            <Link to={`/restaurants/${restaurantId}/menu/${foodId}/edit`}>
-              Edit
-            </Link>
-          </li>
-        )}
+      
+
       </ul>
 
       {food.comments.length === 0 ? (
@@ -105,6 +100,7 @@ const foodDetails = (props) => {
       ) : (
         <>
           <ul>
+            
             <h4>comments:</h4>
 
             <CommentForm handleAddComment={handleAddComment} />

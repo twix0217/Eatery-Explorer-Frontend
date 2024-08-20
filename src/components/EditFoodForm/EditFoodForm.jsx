@@ -14,13 +14,17 @@ const EditFoodForm = ({ handleUpdateFood }) => {
 
   useEffect(() => {
     async function fetchFood() {
-      const food = await hootService.showFood(restaurantId, foodId);
-      setFormData({
-        name: food.name,
-        type: food.type,
-        description: food.description,
-        price: food.price,
-      });
+      try {
+        const food = await hootService.showFood(restaurantId, foodId);
+        setFormData({
+          name: food.name,
+          type: food.type,
+          description: food.description,
+          price: food.price,
+        });
+      } catch (error) {
+        console.error('Error fetching food data:', error);
+      }
     }
     fetchFood();
   }, [restaurantId, foodId]);
@@ -31,8 +35,12 @@ const EditFoodForm = ({ handleUpdateFood }) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    await handleUpdateFood(restaurantId, foodId, formData);
-    navigate(`/restaurants/${restaurantId}/menu/${foodId}`);
+    try {
+      await handleUpdateFood(restaurantId, foodId, formData);
+      navigate(`/restaurants/${restaurantId}/menu/${foodId}`);
+    } catch (error) {
+      console.error('Error updating food:', error);
+    }
   };
 
   return (
@@ -75,6 +83,7 @@ const EditFoodForm = ({ handleUpdateFood }) => {
         <input
           required
           type="number"
+          step="0.01"
           name="price"
           id="price"
           value={formData.price}
