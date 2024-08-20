@@ -190,7 +190,7 @@ console.log(newRes);
           <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
         )}
         {props.user.id === restaurant.owner ? (
-          <form onSubmit={handlesubmit} action="">
+          <form onSubmit={handlesubmitC} action="">
             <button type="submit">delete the restaurant</button>
           </form>
         ) : null}
