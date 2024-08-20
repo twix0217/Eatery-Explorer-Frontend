@@ -126,7 +126,7 @@ const App = () => {
 
             <Route
               path={`/restaurants/:restaurantId/menu/:foodId`}
-              element={<FoodDetails restaurants={restaurants} resId={resId} />}
+              element={<FoodDetails restaurants={restaurants} resId={resId} user={user} />}
             />
             <Route
               path="/restaurants/new"

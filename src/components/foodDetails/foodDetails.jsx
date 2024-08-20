@@ -14,8 +14,7 @@ const foodDetails = (props) => {
 
   const [food, setFood] = useState(null);
   const [restoId, setRestoId] = useState(null);
-
-
+  
   useEffect(() => {
     async function getFood() {
       const foodData = await hootService.showFood(restaurantId, foodId);
@@ -24,7 +23,6 @@ const foodDetails = (props) => {
       setRestoId(restaurantId);
     }
     getFood();
-    
   }, [foodId]);
 
   const handleAddComment = async (formData) => {
@@ -38,6 +36,46 @@ const foodDetails = (props) => {
     copyFood.comments.push(newComment);
     setFood(copyFood);
   };
+
+  //----------------------------------------------
+
+
+
+
+
+
+
+  
+  const handlesubmitDelete = async (e) => {
+
+    e.preventDefault();
+    handleDeleteComment(restaurantId,foodId,e.target.id);
+    
+    const newRes=food.comments.filter((comment)=>comment._id!==e.target.id);  
+    
+    const updatefood = { ...food, comments: newRes }; ;
+    setFood(updatefood);
+    
+    console.log(newRes);
+    //setRestaurant(newRes);
+    
+      }
+
+
+
+//----------------------------------------------
+  
+  const handleDeleteComment = async (rId, foodId, commentId) => {
+    commentService.deleteFoodComment(rId,foodId, commentId);
+
+    // await props.handleDeleteRestaurant(restaurantsId);
+    // navigate(`/owners/${props.user.id}`);
+  };
+
+  
+
+
+  //----------------------------------------------
 
   if (!food) {
     return <main>loading....</main>;
@@ -65,12 +103,22 @@ const foodDetails = (props) => {
             <CommentForm handleAddComment={handleAddComment} />
             {food.comments.map((comment) => {
               return (
-                <li key={comment._id}>
-                  <p>
-                    {" "}
-                    <b>{comment.authorName}</b> : {comment.text}
-                  </p>
-                </li>
+             <div>
+                  <form
+                    action=""
+                    id={comment._id}
+                    onSubmit={handlesubmitDelete}
+                  >
+                    <p>
+                      <b>{comment.authorName}</b>: {comment.text}
+                    </p>
+
+
+                    {comment.authorId === props.user.id ? (
+                      <button type="submit">delete</button>
+                    ) : null}
+                  </form>
+               </div>
               );
             })}
           </ul>
