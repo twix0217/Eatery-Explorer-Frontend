@@ -63,7 +63,7 @@ const RestaurantDetails = (props) => {
       <header>
         <h1>{restaurant.name.toUpperCase()}</h1>
         <h2>{restaurant.type}</h2>
-        <h3>Description: {restaurant.description}</h3>
+        <h3>Description: {restaurant.describtion}</h3>
         <h3>Location: {restaurant.location}</h3>
         <h3>Cuisine: {restaurant.cuisine}</h3>
 
