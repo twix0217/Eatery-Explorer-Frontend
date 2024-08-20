@@ -98,6 +98,26 @@ const App = () => {
       console.error("Error adding food:", error);
     }
   };
+  const handleUpdateFood = async (restaurantId, foodId, updatedFoodData) => {
+    try {
+      const updatedFood = await hootService.updateFood(restaurantId, foodId, updatedFoodData);
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.map((restaurant) =>
+          restaurant._id === restaurantId
+            ? {
+                ...restaurant,
+                menu: restaurant.menu.map((food) =>
+                  food._id === foodId ? updatedFood : food
+                ),
+              }
+            : restaurant
+        )
+      );
+      navigate(`/restaurants/${restaurantId}/menu`);
+    } catch (error) {
+      console.error("Error updating food:", error);
+    }
+  };
 
   return (
     <>
@@ -137,7 +157,18 @@ const App = () => {
            <Route
             path="/restaurants/:restaurantId/add-food"
              element={<AddFoodForm handleAddFood={handleAddFood} />}
-/>
+/>         
+<Route
+              path="/restaurants/:restaurantId/menu/:foodId"
+              element={
+                <FoodDetails
+                  restaurants={restaurants}
+                  resId={resId}
+                  handleUpdateFood={handleUpdateFood}
+                />
+              }
+            />
+              
           </>
         ) : (
           // Public Route:

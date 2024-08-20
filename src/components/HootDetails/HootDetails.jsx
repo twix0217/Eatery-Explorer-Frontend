@@ -77,6 +77,11 @@ const RestaurantDetails = (props) => {
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
+                {props.user.id === restaurant.owner && (
+                      <Link to={`/restaurants/${restaurant._id}/menu/${item._id}/edit`}>
+                        Edit 
+                      </Link>
+                    )}
               </li>
             ))}
         </ul>
@@ -93,6 +98,11 @@ const RestaurantDetails = (props) => {
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
+                {props.user.id === restaurant.owner && (
+                      <Link to={`/restaurants/${restaurant._id}/menu/${item._id}/edit`}>
+                        Edit 
+                      </Link>
+                    )}
               </li>
             ))}
         </ul>
@@ -110,6 +120,12 @@ const RestaurantDetails = (props) => {
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
+                {props.user.id === restaurant.owner && (
+                      <Link to={`/restaurants/${restaurant._id}/menu/${item._id}/edit`}>
+                        Edit 
+                      </Link>
+                    )}
+                
               </li>
             ))}
         </ul>
@@ -126,6 +142,11 @@ const RestaurantDetails = (props) => {
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
+                  {props.user.id === restaurant.owner && (
+                      <Link to={`/restaurants/${restaurant._id}/menu/${item._id}/edit`}>
+                        Edit 
+                      </Link>
+                    )}
               </li>
             ))}
         </ul>
