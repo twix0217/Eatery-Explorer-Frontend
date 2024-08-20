@@ -23,14 +23,14 @@ const RestaurantDetails = (props) => {
       props.setRestId(restaurantsId);
     }
     getRestaurant();
-  }, [restaurantsId, props]);
+  }, [restaurantsId]);
 
   const handleAddComment = async (formData) => {
     const newComment = await commentService.create(restaurantsId, formData);
 
     setRestaurant((prevRestaurant) => ({
       ...prevRestaurant,
-      comments: [...prevRestaurant.comments, newComment]
+      comments: [...prevRestaurant.comments, newComment],
     }));
   };
 
@@ -57,6 +57,7 @@ const RestaurantDetails = (props) => {
     );
   }
 
+  console.log(restaurant)
   return (
     <main>
       <header>
@@ -69,10 +70,12 @@ const RestaurantDetails = (props) => {
         <ul>
           <h3>Main Course: </h3>
           {restaurant.menu
-            .filter(item => item.type === "Main Course")
-            .map(item => (
+            .filter((item) => item.type === "Main Course")
+            .map((item) => (
               <li key={item._id}>
-                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
+                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
+                  {item.name}
+                </Link>
               </li>
             ))}
         </ul>
@@ -83,10 +86,12 @@ const RestaurantDetails = (props) => {
         <ul>
           <h3>Side:</h3>
           {restaurant.menu
-            .filter(item => item.type === "Side")
-            .map(item => (
+            .filter((item) => item.type === "Side")
+            .map((item) => (
               <li key={item._id}>
-                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
+                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
+                  {item.name}
+                </Link>
               </li>
             ))}
         </ul>
@@ -97,10 +102,12 @@ const RestaurantDetails = (props) => {
         <ul>
           <h3>Beverages: </h3>
           {restaurant.menu
-            .filter(item => item.type === "Beverage")
-            .map(item => (
+            .filter((item) => item.type === "Beverage")
+            .map((item) => (
               <li key={item._id}>
-                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>{item.name}</Link>
+                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
+                  {item.name}
+                </Link>
               </li>
             ))}
         </ul>
@@ -115,24 +122,26 @@ const RestaurantDetails = (props) => {
           </Link>
         )}
 
-{props.user.id === restaurant.owner && (
+        {props.user.id === restaurant.owner && (
           <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
         )}
-{props.user.id === restaurant.owner ? (
+        {props.user.id === restaurant.owner ? (
           <form onSubmit={handlesubmit} action="">
             <button type="submit">delete the restaurant</button>
           </form>
         ) : null}
-       
+
         <section>
           <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
           <CommentForm handleAddComment={handleAddComment} />
           {restaurant.comments.length === 0 ? (
             <p>There are no comments.</p>
           ) : (
-            restaurant.comments.map(comment => (
+            restaurant.comments.map((comment) => (
               <div key={comment._id}>
-                <p><b>{comment.authorName}</b>: {comment.text}</p>
+                <p>
+                  <b>{comment.authorName}</b>: {comment.text}
+                </p>
               </div>
             ))
           )}
