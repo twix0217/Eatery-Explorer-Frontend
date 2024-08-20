@@ -13,15 +13,21 @@ import CommentForm from "../CommentForm/CommentForm";
 const RestaurantDetails = (props) => {
   const { restaurantsId } = useParams();
   const [restaurant, setRestaurant] = useState(null);
+  const [comment, setComment] = useState(null);
   const navigate = useNavigate();
 
+
+
+  async function getRestaurant() {
+    const restaurantData = await hootService.show(restaurantsId);
+    // console.log(restaurantData);
+    setRestaurant(restaurantData);
+    setComment(restaurantData.comments);
+    props.setRestId(restaurantsId);
+  }
+
   useEffect(() => {
-    async function getRestaurant() {
-      const restaurantData = await hootService.show(restaurantsId);
-      console.log(restaurantData);
-      setRestaurant(restaurantData);
-      props.setRestId(restaurantsId);
-    }
+    
     getRestaurant();
   }, [restaurantsId]);
 
@@ -34,7 +40,7 @@ const RestaurantDetails = (props) => {
     }));
   };
 
-  const handlesubmit = async (e) => {
+  const handlesubmitC = async (e) => {
     e.preventDefault();
     // const res = await hootService.deleter(restaurantsId);
     // console.log(res);
@@ -43,11 +49,31 @@ const RestaurantDetails = (props) => {
     //navigate(`restaurants/owner/${props.user.id}`);
   };
 
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    await props.handleDeleteRestaurant(restaurantsId);
-    navigate(`/owners/${props.user.id}`);
+
+
+  const handlesubmitDelete = async (e) => {
+
+e.preventDefault();
+handleDeleteComment(restaurantsId,e.target.id);
+
+const newRes=restaurant.comments.filter((comment)=>comment._id!==e.target.id);  
+
+const updateRestaurant = { ...restaurant, comments: newRes }; ;
+setRestaurant(updateRestaurant);
+
+console.log(newRes);
+//setRestaurant(newRes);
+
+  }
+  const handleDeleteComment = async (rId,commentId) => {
+    commentService.deleteC(rId, commentId);
+
+
+    // await props.handleDeleteRestaurant(restaurantsId);
+    // navigate(`/owners/${props.user.id}`);
   };
+
+
 
   if (!restaurant) {
     return (
@@ -57,7 +83,7 @@ const RestaurantDetails = (props) => {
     );
   }
 
-  console.log(restaurant)
+  // console.log(restaurant);
   return (
     <main>
       <header>
@@ -67,7 +93,7 @@ const RestaurantDetails = (props) => {
         <h3>Location: {restaurant.location}</h3>
         <h3>Cuisine: {restaurant.cuisine}</h3>
 
-<hr />
+        <hr />
         <ul>
           <h3>Main Course: </h3>
           {restaurant.menu
@@ -110,7 +136,6 @@ const RestaurantDetails = (props) => {
         <hr />
         <br />
 
-        
         <ul>
           <h3>Desserts:</h3>
           {restaurant.menu
@@ -178,9 +203,13 @@ const RestaurantDetails = (props) => {
           ) : (
             restaurant.comments.map((comment) => (
               <div key={comment._id}>
-                <p>
-                  <b>{comment.authorName}</b>: {comment.text}
-                </p>
+                <form action="" id={comment._id} onSubmit={handlesubmitDelete}>
+                  <p>
+                    <b>{comment.authorName}</b>: {comment.text}
+                  </p>
+
+                {comment.authorId===props.user.id?<button type="submit">delete</button>:null} 
+                </form>
               </div>
             ))
           )}
