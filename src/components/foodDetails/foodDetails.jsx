@@ -14,7 +14,20 @@ const foodDetails = (props) => {
 
   const [food, setFood] = useState(null);
   const [restoId, setRestoId] = useState(null);
-  
+  const[restaurant, setRestaurant] = useState(null);
+
+
+
+
+  async function getRestaurant() {
+    const restaurantData = await hootService.show(restaurantId);
+    // console.log(restaurantData);
+    setRestaurant(restaurantData);
+    // setComment(restaurantData.comments);
+    // props.setRestId(restaurantsId);
+  }
+
+
   useEffect(() => {
     async function getFood() {
       const foodData = await hootService.showFood(restaurantId, foodId);
@@ -23,6 +36,7 @@ const foodDetails = (props) => {
       setRestoId(restaurantId);
     }
     getFood();
+    getRestaurant();
   }, [foodId]);
 
   const handleAddComment = async (formData) => {
@@ -88,7 +102,13 @@ const foodDetails = (props) => {
         <li>dish type : {food.type}</li>
         <li>dish description :{food.description}</li>
         <li>price : {food.price}</li>
-      
+        {props.user.id === restaurant.owner && (
+            <li>
+              <Link to={`/restaurants/${restaurantId}/menu/${foodId}`}>
+                Edit
+              </Link>
+            </li>
+          )}
 
       </ul>
 
