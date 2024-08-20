@@ -5,7 +5,7 @@ const AddFoodForm = ({ handleAddFood }) => {
   const { restaurantId } = useParams(); 
   const [formData, setFormData] = useState({
     name: '',
-    type: '',
+    type: 'Appetizer',
     description: '',
     price: '',
   });
@@ -32,7 +32,7 @@ const AddFoodForm = ({ handleAddFood }) => {
           onChange={handleChange}
         />
         
-        <label htmlFor="type">Type:</label>
+        <label htmlFor="type">type:</label>
         <select
           required
           name="type"

@@ -4,7 +4,7 @@ import hootService from '../../services/hootService';
 
 const OwnerDetails = () => {
   const { ownerId } = useParams();
-  const [restaurants, setRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState(null);
   const [owner, setOwner] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
