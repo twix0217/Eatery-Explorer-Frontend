@@ -40,7 +40,7 @@ const RestaurantDetails = (props) => {
     // console.log(res);
     // props.setRestId(null);
     await props.handleDeleteRestaurant(restaurantsId);
-    navigate(`/owners/${props.user.id}`);
+    //navigate(`restaurants/owner/${props.user.id}`);
   };
 
   const handleDelete = async (e) => {
