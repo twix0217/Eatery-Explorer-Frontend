@@ -38,6 +38,23 @@ const createFC = async (restaurantId, foodId, formData) => {
   }
 };
 
+const deleteC = async (restaurantId, commentId) => {
+  try {
+    const data = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    const res = await fetch(`${BASE_URL}/${restaurantId}/comments/${commentId}`, data);
+
+    return res.json();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export default {
-  create,createFC
+  create,createFC,deleteC
 };
