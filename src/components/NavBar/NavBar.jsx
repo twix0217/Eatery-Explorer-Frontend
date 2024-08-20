@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const NavBar = ({ user, handleSignout }) => {
 
-  console.log("thia ia user",user)
+  //console.log("thia ia user",user)
   return (
     <>
       {user ? (
