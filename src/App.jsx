@@ -127,6 +127,26 @@ const App = () => {
     }
   };
 
+  const handleDeleteFood = async (restaurantId, foodId) => {
+    try {
+      await hootService.deleteFood(restaurantId, foodId);
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.map((restaurant) =>
+          restaurant._id === restaurantId
+            ? {
+                ...restaurant,
+                menu: restaurant.menu.filter((food) => food._id !== foodId),
+              }
+            : restaurant
+        )
+      );
+      navigate(`/restaurants/${restaurantId}`);
+    } catch (error) {
+      console.error("Error deleting food:", error);
+    }
+  };
+  
+
   return (
     <>
       <NavBar user={user} handleSignout={handleSignout} />
@@ -162,6 +182,7 @@ const App = () => {
                   resId={resId}
                   user={user}
                   selectedRestaurant = {selectedRestaurant}
+                  handleDeleteFood={handleDeleteFood}
                 />
               }
             />

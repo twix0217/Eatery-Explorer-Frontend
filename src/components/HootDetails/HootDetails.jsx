@@ -6,7 +6,6 @@ import FoodDetails from "../foodDetails/foodDetails";
 import hootService from "../../services/hootService";
 import commentService from "../../services/commentService";
 
-const peaches =1000
 // Components
 import AuthorDate from "../common/AuthorDate";
 import CommentForm from "../CommentForm/CommentForm";

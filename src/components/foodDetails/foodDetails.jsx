@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -87,6 +88,11 @@ const foodDetails = (props) => {
   };
 
   
+  
+  const handleDeleteClick = () => {
+    props.handleDeleteFood(restoId, food._id);
+  };
+  
 
 
   //----------------------------------------------
@@ -107,6 +113,7 @@ const foodDetails = (props) => {
             <Link to={`/restaurants/${restaurantId}/menu/${foodId}/edit`}>
               Edit
             </Link>
+            <button onClick={handleDeleteClick}>Delete Food</button>
             </p>
           )}
           
