@@ -124,9 +124,48 @@ const addFood = async (restaurantId, foodData) => {
   return response.json();
 };
 
+const updateFood = async (restaurantId, foodId, foodData) => {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`${BASE_URL}/${restaurantId}/menu/${foodId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(foodData),
+  });
+
+  if (!response.ok) throw new Error('Failed to update food');
+
+  return response.json();
+};
+
+async function deleteFood(restaurantId, foodId) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${BASE_URL}/${restaurantId}/menu/${foodId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete food');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting food:', error);
+    throw error;
+  }
+}
 
 
 
 
 
-export default { index, show, create, getOwnerById, showFood, update, addFood, deleter};
+
+
+export default { index, show, create, getOwnerById, showFood, update, addFood, deleter, updateFood, deleteFood};

@@ -1,6 +1,6 @@
-import { useParams, Link } from 'react-router-dom'; // Import Link
-import { useEffect, useState } from 'react';
-import hootService from '../../services/hootService';
+import { useParams, Link } from "react-router-dom"; // Import Link
+import { useEffect, useState } from "react";
+import hootService from "../../services/hootService";
 
 const OwnerDetails = () => {
   const { ownerId } = useParams();
@@ -13,7 +13,9 @@ const OwnerDetails = () => {
     const fetchRestaurantsAndOwner = async () => {
       try {
         const restaurantsData = await hootService.index(); // Fetch all restaurants
-        setRestaurants(restaurantsData.filter(restaurant => restaurant.owner === ownerId));
+        setRestaurants(
+          restaurantsData.filter((restaurant) => restaurant.owner === ownerId)
+        );
 
         const ownerData = await hootService.getOwnerById(ownerId); // Fetch owner details
         setOwner(ownerData);
@@ -33,7 +35,7 @@ const OwnerDetails = () => {
   return (
     <main>
       <header>
-        <h1>Restaurants Owned by {owner ? owner.username : 'Loading...'}</h1>
+        <h1>Restaurants Owned by {owner ? owner.username : "Loading..."}</h1>
         {restaurants.length === 0 ? (
           <p>No restaurants found.</p>
         ) : (

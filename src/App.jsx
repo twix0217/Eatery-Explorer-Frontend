@@ -4,7 +4,6 @@ import authService from "./services/authService";
 import hootService from "./services/hootService";
 import FoodDetails from "./components/foodDetails/foodDetails";
 
-
 // Components
 import NavBar from "./components/NavBar/NavBar";
 import Landing from "./components/Landing/Landing";
@@ -17,13 +16,15 @@ import HootForm from "./components/HootForm/HootForm";
 import UpdateForm from "./components/HootForm/UpdateForm";
 import OwnerDetails from "./components/OwnerDetails/OwnerDetails";
 import AddFoodForm from "./components/AddFoodForm/AddFoodForm";
+import EditFoodForm from "./components/EditFoodForm/EditFoodForm";
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
   const [restaurants, setRestaurants] = useState([]);
   const navigate = useNavigate();
   const [resId, setRestId] = useState(null);
- // console.log("thia ia app user",user)
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  // console.log("thia ia app user",user)
 
   //-------------------------------------
 
@@ -73,29 +74,75 @@ const App = () => {
     }
   };
 
-
   const handleDeleteRestaurant = async (restaurantId) => {
     try {
       const deletedRestaurant = await hootService.deleter(restaurantId);
       getRestaurants();
       navigate(`restaurants/owner/${user.id}`);
-    
-  }  catch (error) {
-    console.error("Error deleting food:", error);
-  }};
+    } catch (error) {
+      console.error("Error deleting food:", error);
+    }
+  };
 
   const handleAddFood = async (restaurantId, formData) => {
     try {
-      const updatedRestaurant = await hootService.addFood(restaurantId, formData);
+      const updatedRestaurant = await hootService.addFood(
+        restaurantId,
+        formData
+      );
       setRestaurants((prevRestaurants) =>
         prevRestaurants.map((restaurant) =>
           restaurant._id === restaurantId ? updatedRestaurant : restaurant
         )
       );
       navigate(`/restaurants/${restaurantId}`);
-
     } catch (error) {
       console.error("Error adding food:", error);
+    }
+  };
+  const handleUpdateFood = async (restaurantId, foodId, updatedFoodData) => {
+    try {
+      const updatedFood = await hootService.updateFood(
+        restaurantId,
+        foodId,
+        updatedFoodData
+      );
+
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.map((restaurant) =>
+          restaurant._id === restaurantId
+            ? {
+                ...restaurant,
+                menu: restaurant.menu.map((food) =>
+                  food._id === foodId ? updatedFood : food
+                ),
+              }
+            : restaurant
+        )
+      );
+
+      navigate(`/restaurants/${restaurantId}/menu/${foodId}`);
+    } catch (error) {
+      console.error("Error updating food:", error);
+    }
+  };
+
+  const handleDeleteFood = async (restaurantId, foodId) => {
+    try {
+      await hootService.deleteFood(restaurantId, foodId);
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.map((restaurant) =>
+          restaurant._id === restaurantId
+            ? {
+                ...restaurant,
+                menu: restaurant.menu.filter((food) => food._id !== foodId),
+              }
+            : restaurant
+        )
+      );
+      navigate(`/restaurants/${restaurantId}`);
+    } catch (error) {
+      console.error("Error deleting food:", error);
     }
   };
 
@@ -119,6 +166,7 @@ const App = () => {
                 <HootDetails
                   setRestId={setRestId}
                   user={user}
+                  setSelectedRestaurant={setSelectedRestaurant}
                   handleDeleteRestaurant={handleDeleteRestaurant}
                 />
               }
@@ -126,18 +174,43 @@ const App = () => {
 
             <Route
               path={`/restaurants/:restaurantId/menu/:foodId`}
-              element={<FoodDetails restaurants={restaurants} resId={resId} user={user} />}
+              element={
+                <FoodDetails
+                  restaurants={restaurants}
+                  resId={resId}
+                  user={user}
+                  selectedRestaurant={selectedRestaurant}
+                  handleDeleteFood={handleDeleteFood}
+                />
+              }
             />
             <Route
               path="/restaurants/new"
               element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
             />
-            <Route path="restaurants/owner/:ownerId" element={<OwnerDetails />} />
-           <Route path="/restaurants/:restaurantId/edit" element={<UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
-           <Route
-            path="/restaurants/:restaurantId/add-food"
-             element={<AddFoodForm handleAddFood={handleAddFood} />}
-/>
+            <Route
+              path="restaurants/owner/:ownerId"
+              element={<OwnerDetails />}
+            />
+            <Route
+              path="/restaurants/:restaurantId/edit"
+              element={
+                <UpdateForm handleUpdateRestaurant={handleUpdateRestaurant} />
+              }
+            />
+            <Route
+              path="/restaurants/:restaurantId/add-food"
+              element={<AddFoodForm handleAddFood={handleAddFood} />}
+            />
+            <Route
+              path="/restaurants/:restaurantId/menu/:foodId/edit"
+              element={
+                <EditFoodForm
+                  handleUpdateFood={handleUpdateFood}
+                  selectedRestaurant={selectedRestaurant}
+                />
+              }
+            />
           </>
         ) : (
           // Public Route:
