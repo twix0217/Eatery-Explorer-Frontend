@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom'; // Import Link
 import { useEffect, useState } from 'react';
-import hootService from '../../services/hootService';
+import restaurantService from '../../services/restaurantService';
 
 const OwnerDetails = () => {
   const { ownerId } = useParams();
@@ -12,10 +12,10 @@ const OwnerDetails = () => {
   useEffect(() => {
     const fetchRestaurantsAndOwner = async () => {
       try {
-        const restaurantsData = await hootService.index(); // Fetch all restaurants
+        const restaurantsData = await restaurantService.index(); // Fetch all restaurants
         setRestaurants(restaurantsData.filter(restaurant => restaurant.owner === ownerId));
 
-        const ownerData = await hootService.getOwnerById(ownerId); // Fetch owner details
+        const ownerData = await restaurantService.getOwnerById(ownerId); // Fetch owner details
         setOwner(ownerData);
       } catch (error) {
         setError(error);

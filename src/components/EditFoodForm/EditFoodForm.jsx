@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import hootService from "../../services/hootService";
+import restaurantService from "../../services/restaurantService";
 
 const EditFoodForm = ({ handleUpdateFood }) => {
   const { restaurantId, foodId } = useParams();
@@ -15,7 +15,7 @@ const EditFoodForm = ({ handleUpdateFood }) => {
   useEffect(() => {
     async function fetchFood() {
       try {
-        const food = await hootService.showFood(restaurantId, foodId);
+        const food = await restaurantService.showFood(restaurantId, foodId);
         setFormData({
           name: food.name,
           type: food.type,

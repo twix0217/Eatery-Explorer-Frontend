@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // Services
-import hootService from "../../services/hootService";
+import restaurantService from "../../services/restaurantService";
 import commentService from "../../services/commentService";
 import { Link } from "react-router-dom";
 // Components
@@ -17,7 +17,7 @@ const foodDetails = (props) => {
   const [restaurant, setRestaurant] = useState(props.selectedRestaurant);
 
   // async function getRestaurant() {
-  //   const restaurantData = await hootService.show(restaurantId);
+  //   const restaurantData = await restaurantService.show(restaurantId);
   //   // console.log(restaurantData);
   //   setRestaurant(restaurantData);
   //   // setComment(restaurantData.comments);
@@ -26,7 +26,7 @@ const foodDetails = (props) => {
 
   useEffect(() => {
     async function getFood() {
-      const foodData = await hootService.showFood(restaurantId, foodId);
+      const foodData = await restaurantService.showFood(restaurantId, foodId);
       setFood(foodData);
       //console.log("yi i", food);
       setRestoId(restaurantId);

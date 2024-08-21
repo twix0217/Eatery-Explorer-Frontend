@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FoodDetails from "../foodDetails/foodDetails";
 // Services
-import hootService from "../../services/hootService";
+import restaurantService from "../../services/restaurantService";
 import commentService from "../../services/commentService";
 
 // Components
@@ -17,7 +17,7 @@ const RestaurantDetails = (props) => {
   const navigate = useNavigate();
 
   async function getRestaurant() {
-    const restaurantData = await hootService.show(restaurantsId);
+    const restaurantData = await restaurantService.show(restaurantsId);
     // console.log(restaurantData);
     setRestaurant(restaurantData);
     setComment(restaurantData.comments);
@@ -40,7 +40,7 @@ const RestaurantDetails = (props) => {
 
   const handlesubmitC = async (e) => {
     e.preventDefault();
-    // const res = await hootService.deleter(restaurantsId);
+    // const res = await restaurantService.deleter(restaurantsId);
     // console.log(res);
     // props.setRestId(null);
     await props.handleDeleteRestaurant(restaurantsId);
@@ -85,12 +85,12 @@ const RestaurantDetails = (props) => {
         <h3>Description: {restaurant.describtion}</h3>
         <h3>Location: {restaurant.location}</h3>
         <h3>Cuisine: {restaurant.cuisine}</h3>
-    <br />
-      
-    <div>
+        <br />
+
+        <div>
           <ul>
-            {restaurant.menu.filter((item) => item.type === "Main Course").length >
-            0 ? (
+            {restaurant.menu.filter((item) => item.type === "Main Course")
+              .length > 0 ? (
               <>
                 <h3>Main Courses: </h3>
                 {restaurant.menu
@@ -109,13 +109,12 @@ const RestaurantDetails = (props) => {
           </ul>
         </div>
 
-        
         <br />
 
         <div>
           <ul>
-            {restaurant.menu.filter((item) => item.type === "Appetizer").length >
-            0 ? (
+            {restaurant.menu.filter((item) => item.type === "Appetizer")
+              .length > 0 ? (
               <>
                 <h3>Appetizers: </h3>
                 {restaurant.menu
@@ -134,7 +133,6 @@ const RestaurantDetails = (props) => {
           </ul>
         </div>
 
-        
         <br />
 
         <div>
@@ -159,7 +157,6 @@ const RestaurantDetails = (props) => {
           </ul>
         </div>
 
-        
         <br />
 
         <div>
@@ -183,7 +180,6 @@ const RestaurantDetails = (props) => {
             ) : null}
           </ul>
         </div>
-
       </header>
 
       <section>
