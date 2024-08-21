@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -15,10 +14,7 @@ const foodDetails = (props) => {
 
   const [food, setFood] = useState(null);
   const [restoId, setRestoId] = useState(null);
-  const[restaurant, setRestaurant] = useState(props.selectedRestaurant);
-
-
-
+  const [restaurant, setRestaurant] = useState(props.selectedRestaurant);
 
   // async function getRestaurant() {
   //   const restaurantData = await hootService.show(restaurantId);
@@ -27,7 +23,6 @@ const foodDetails = (props) => {
   //   // setComment(restaurantData.comments);
   //   // props.setRestId(restaurantsId);
   // }
-
 
   useEffect(() => {
     async function getFood() {
@@ -38,7 +33,7 @@ const foodDetails = (props) => {
     }
     getFood();
     // getRestaurant();
-  }, [foodId,restaurantId]);
+  }, [foodId, restaurantId]);
 
   const handleAddComment = async (formData) => {
     const newComment = await commentService.createFC(
@@ -54,46 +49,33 @@ const foodDetails = (props) => {
 
   //----------------------------------------------
 
-
-
-
-
-
-
-  
   const handlesubmitDelete = async (e) => {
-
     e.preventDefault();
-    handleDeleteComment(restaurantId,foodId,e.target.id);
-    
-    const newRes=food.comments.filter((comment)=>comment._id!==e.target.id);  
-    
-    const updatefood = { ...food, comments: newRes }; ;
+    handleDeleteComment(restaurantId, foodId, e.target.id);
+
+    const newRes = food.comments.filter(
+      (comment) => comment._id !== e.target.id
+    );
+
+    const updatefood = { ...food, comments: newRes };
     setFood(updatefood);
-    
+
     console.log(newRes);
     //setRestaurant(newRes);
-    
-      }
+  };
 
+  //----------------------------------------------
 
-
-//----------------------------------------------
-  
   const handleDeleteComment = async (rId, foodId, commentId) => {
-    commentService.deleteFoodComment(rId,foodId, commentId);
+    commentService.deleteFoodComment(rId, foodId, commentId);
 
     // await props.handleDeleteRestaurant(restaurantsId);
     // navigate(`/owners/${props.user.id}`);
   };
 
-  
-  
   const handleDeleteClick = () => {
     props.handleDeleteFood(restoId, food._id);
   };
-  
-
 
   //----------------------------------------------
 
@@ -109,14 +91,13 @@ const foodDetails = (props) => {
         <li>dish description :{food.description}</li>
         <li>price : {food.price}</li>
         {props.user.id === restaurant.owner && (
-           <p>
+          <p>
             <Link to={`/restaurants/${restaurantId}/menu/${foodId}/edit`}>
               Edit
             </Link>
             <button onClick={handleDeleteClick}>Delete Food</button>
-            </p>
-          )}
-          
+          </p>
+        )}
       </ul>
 
       {food.comments.length === 0 ? (
@@ -127,13 +108,12 @@ const foodDetails = (props) => {
       ) : (
         <>
           <ul>
-            
             <h4>comments:</h4>
 
             <CommentForm handleAddComment={handleAddComment} />
             {food.comments.map((comment) => {
               return (
-             <div>
+                <div>
                   <form
                     action=""
                     id={comment._id}
@@ -143,12 +123,11 @@ const foodDetails = (props) => {
                       <b>{comment.authorName}</b>: {comment.text}
                     </p>
 
-
                     {comment.authorId === props.user.id ? (
                       <button type="submit">delete</button>
                     ) : null}
                   </form>
-               </div>
+                </div>
               );
             })}
           </ul>

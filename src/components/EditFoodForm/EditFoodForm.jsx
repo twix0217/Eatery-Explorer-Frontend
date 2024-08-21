@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import hootService from '../../services/hootService';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import hootService from "../../services/hootService";
 
 const EditFoodForm = ({ handleUpdateFood }) => {
   const { restaurantId, foodId } = useParams();
   const [formData, setFormData] = useState({
-    name: '',
-    type: 'Appetizer',
-    description: '',
-    price: '',
+    name: "",
+    type: "Appetizer",
+    description: "",
+    price: "",
   });
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const EditFoodForm = ({ handleUpdateFood }) => {
           price: food.price,
         });
       } catch (error) {
-        console.error('Error fetching food data:', error);
+        console.error("Error fetching food data:", error);
       }
     }
     fetchFood();
@@ -39,7 +39,7 @@ const EditFoodForm = ({ handleUpdateFood }) => {
       await handleUpdateFood(restaurantId, foodId, formData);
       navigate(`/restaurants/${restaurantId}/menu/${foodId}`);
     } catch (error) {
-      console.error('Error updating food:', error);
+      console.error("Error updating food:", error);
     }
   };
 
@@ -55,7 +55,7 @@ const EditFoodForm = ({ handleUpdateFood }) => {
           value={formData.name}
           onChange={handleChange}
         />
-        
+
         <label htmlFor="type">Type:</label>
         <select
           required
@@ -78,7 +78,7 @@ const EditFoodForm = ({ handleUpdateFood }) => {
           value={formData.description}
           onChange={handleChange}
         />
-        
+
         <label htmlFor="price">Price:</label>
         <input
           required

@@ -145,7 +145,6 @@ const App = () => {
       console.error("Error deleting food:", error);
     }
   };
-  
 
   return (
     <>
@@ -167,9 +166,8 @@ const App = () => {
                 <HootDetails
                   setRestId={setRestId}
                   user={user}
-                  setSelectedRestaurant = {setSelectedRestaurant}
+                  setSelectedRestaurant={setSelectedRestaurant}
                   handleDeleteRestaurant={handleDeleteRestaurant}
-
                 />
               }
             />
@@ -181,7 +179,7 @@ const App = () => {
                   restaurants={restaurants}
                   resId={resId}
                   user={user}
-                  selectedRestaurant = {selectedRestaurant}
+                  selectedRestaurant={selectedRestaurant}
                   handleDeleteFood={handleDeleteFood}
                 />
               }
@@ -206,8 +204,12 @@ const App = () => {
             />
             <Route
               path="/restaurants/:restaurantId/menu/:foodId/edit"
-              element={<EditFoodForm handleUpdateFood={handleUpdateFood} selectedRestaurant = {selectedRestaurant}
-               />}
+              element={
+                <EditFoodForm
+                  handleUpdateFood={handleUpdateFood}
+                  selectedRestaurant={selectedRestaurant}
+                />
+              }
             />
           </>
         ) : (

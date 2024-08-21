@@ -16,8 +16,6 @@ const RestaurantDetails = (props) => {
   const [comment, setComment] = useState(null);
   const navigate = useNavigate();
 
-
-
   async function getRestaurant() {
     const restaurantData = await hootService.show(restaurantsId);
     // console.log(restaurantData);
@@ -28,7 +26,6 @@ const RestaurantDetails = (props) => {
   }
 
   useEffect(() => {
-    
     getRestaurant();
   }, [restaurantsId]);
 
@@ -50,31 +47,26 @@ const RestaurantDetails = (props) => {
     //navigate(`restaurants/owner/${props.user.id}`);
   };
 
-
-
   const handlesubmitDelete = async (e) => {
+    e.preventDefault();
+    handleDeleteComment(restaurantsId, e.target.id);
 
-e.preventDefault();
-handleDeleteComment(restaurantsId,e.target.id);
+    const newRes = restaurant.comments.filter(
+      (comment) => comment._id !== e.target.id
+    );
 
-const newRes=restaurant.comments.filter((comment)=>comment._id!==e.target.id);  
+    const updateRestaurant = { ...restaurant, comments: newRes };
+    setRestaurant(updateRestaurant);
 
-const updateRestaurant = { ...restaurant, comments: newRes }; ;
-setRestaurant(updateRestaurant);
-
-console.log(newRes);
-//setRestaurant(newRes);
-
-  }
-  const handleDeleteComment = async (rId,commentId) => {
+    console.log(newRes);
+    //setRestaurant(newRes);
+  };
+  const handleDeleteComment = async (rId, commentId) => {
     commentService.deleteC(rId, commentId);
-
 
     // await props.handleDeleteRestaurant(restaurantsId);
     // navigate(`/owners/${props.user.id}`);
   };
-
-
 
   if (!restaurant) {
     return (
@@ -104,7 +96,6 @@ console.log(newRes);
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
-             
               </li>
             ))}
         </ul>
@@ -121,7 +112,6 @@ console.log(newRes);
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
-              
               </li>
             ))}
         </ul>
@@ -138,8 +128,6 @@ console.log(newRes);
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
-              
-                
               </li>
             ))}
         </ul>
@@ -156,7 +144,6 @@ console.log(newRes);
                 <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
                   {item.name}
                 </Link>
-               
               </li>
             ))}
         </ul>
@@ -174,7 +161,7 @@ console.log(newRes);
         {props.user.id === restaurant.owner && (
           <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
         )}
-      
+
         {props.user.id === restaurant.owner ? (
           <form onSubmit={handlesubmitC} action="">
             <button type="submit">delete the restaurant</button>
@@ -194,7 +181,9 @@ console.log(newRes);
                     <b>{comment.authorName}</b>: {comment.text}
                   </p>
 
-                {comment.authorId===props.user.id?<button type="submit">delete</button>:null} 
+                  {comment.authorId === props.user.id ? (
+                    <button type="submit">delete</button>
+                  ) : null}
                 </form>
               </div>
             ))
