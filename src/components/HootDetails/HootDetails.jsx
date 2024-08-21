@@ -85,70 +85,105 @@ const RestaurantDetails = (props) => {
         <h3>Description: {restaurant.describtion}</h3>
         <h3>Location: {restaurant.location}</h3>
         <h3>Cuisine: {restaurant.cuisine}</h3>
+    <br />
+      
+    <div>
+          <ul>
+            {restaurant.menu.filter((item) => item.type === "Main Course").length >
+            0 ? (
+              <>
+                <h3>Main Courses: </h3>
+                {restaurant.menu
+                  .filter((item) => item.type === "Main Course")
+                  .map((item) => (
+                    <li key={item._id}>
+                      <Link
+                        to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+              </>
+            ) : null}
+          </ul>
+        </div>
 
-        <hr />
-        <ul>
-          <h3>Main Course: </h3>
-          {restaurant.menu
-            .filter((item) => item.type === "Main Course")
-            .map((item) => (
-              <li key={item._id}>
-                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-        </ul>
-
-        <hr />
+        
         <br />
 
-        <ul>
-          <h3>Appetizer:</h3>
-          {restaurant.menu
-            .filter((item) => item.type === "Appetizer")
-            .map((item) => (
-              <li key={item._id}>
-                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-        </ul>
+        <div>
+          <ul>
+            {restaurant.menu.filter((item) => item.type === "Appetizer").length >
+            0 ? (
+              <>
+                <h3>Appetizers: </h3>
+                {restaurant.menu
+                  .filter((item) => item.type === "Appetizer")
+                  .map((item) => (
+                    <li key={item._id}>
+                      <Link
+                        to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+              </>
+            ) : null}
+          </ul>
+        </div>
 
-        <hr />
+        
         <br />
 
-        <ul>
-          <h3>Desserts:</h3>
-          {restaurant.menu
-            .filter((item) => item.type === "Dessert")
-            .map((item) => (
-              <li key={item._id}>
-                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-        </ul>
+        <div>
+          <ul>
+            {restaurant.menu.filter((item) => item.type === "Dessert").length >
+            0 ? (
+              <>
+                <h3>Desserts: </h3>
+                {restaurant.menu
+                  .filter((item) => item.type === "Dessert")
+                  .map((item) => (
+                    <li key={item._id}>
+                      <Link
+                        to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+              </>
+            ) : null}
+          </ul>
+        </div>
 
-        <hr />
+        
         <br />
 
-        <ul>
-          <h3>Beverages: </h3>
-          {restaurant.menu
-            .filter((item) => item.type === "Beverage")
-            .map((item) => (
-              <li key={item._id}>
-                <Link to={`/restaurants/${restaurant._id}/menu/${item._id}`}>
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-        </ul>
+        <div>
+          <ul>
+            {restaurant.menu.filter((item) => item.type === "Beverage").length >
+            0 ? (
+              <>
+                <h3>Beverages: </h3>
+                {restaurant.menu
+                  .filter((item) => item.type === "Beverage")
+                  .map((item) => (
+                    <li key={item._id}>
+                      <Link
+                        to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+              </>
+            ) : null}
+          </ul>
+        </div>
 
-        <hr />
       </header>
 
       <section>
@@ -157,7 +192,7 @@ const RestaurantDetails = (props) => {
             Edit Restaurant
           </Link>
         )}
-
+        <br />
         {props.user.id === restaurant.owner && (
           <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
         )}
