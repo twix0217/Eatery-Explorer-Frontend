@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import authService from "./services/authService";
-import hootService from "./services/hootService";
+import restaurantService from "./services/restaurantService";
 import FoodDetails from "./components/foodDetails/foodDetails";
 
 // Components
@@ -10,10 +10,10 @@ import Landing from "./components/Landing/Landing";
 import Dashboard from "./components/Dashboard/Dashboard";
 import SignupForm from "./components/SignupForm/SignupForm";
 import SigninForm from "./components/SigninForm/SigninForm";
-import HootList from "./components/HootList/HootList";
-import HootDetails from "./components/HootDetails/HootDetails";
-import HootForm from "./components/HootForm/HootForm";
-import UpdateForm from "./components/HootForm/UpdateForm";
+import RestaurantsList from "./components/RestaurantsList/RestaurantsList";
+import RestaurantDetails from "./components/RestaurantDetails/RestaurantDetails";
+import RestaurantForm from "./components/RestaurantForm/RestaurantForm";
+import UpdateForm from "./components/RestaurantForm/UpdateForm";
 import OwnerDetails from "./components/OwnerDetails/OwnerDetails";
 import AddFoodForm from "./components/AddFoodForm/AddFoodForm";
 import EditFoodForm from "./components/EditFoodForm/EditFoodForm";
@@ -24,21 +24,16 @@ const App = () => {
   const navigate = useNavigate();
   const [resId, setRestId] = useState(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
-  // console.log("thia ia app user",user)
-
-  //-------------------------------------
 
   async function getRestaurants() {
-    const restaurantData = await hootService.index();
+    const restaurantData = await restaurantService.index();
     setRestaurants(restaurantData);
   }
-
-  //---------------------------------
 
   const mario = 10;
   useEffect(() => {
     async function getRestaurants() {
-      const restaurantData = await hootService.index();
+      const restaurantData = await restaurantService.index();
       setRestaurants(restaurantData);
     }
     if (user) {
@@ -52,14 +47,14 @@ const App = () => {
   };
 
   const handleAddRestaurant = async (formData) => {
-    const newRestaurant = await hootService.create(formData);
+    const newRestaurant = await restaurantService.create(formData);
     setRestaurants([...restaurants, newRestaurant]);
-    navigate("/restaurants");
+    navigate(`restaurants/owner/${user.id}`);
   };
 
   const handleUpdateRestaurant = async (restaurantId, formData) => {
     try {
-      const updatedRestaurant = await hootService.update(
+      const updatedRestaurant = await restaurantService.update(
         restaurantId,
         formData
       );
@@ -76,7 +71,7 @@ const App = () => {
 
   const handleDeleteRestaurant = async (restaurantId) => {
     try {
-      const deletedRestaurant = await hootService.deleter(restaurantId);
+      const deletedRestaurant = await restaurantService.deleter(restaurantId);
       getRestaurants();
       navigate(`restaurants/owner/${user.id}`);
     } catch (error) {
@@ -86,15 +81,18 @@ const App = () => {
 
   const handleAddFood = async (restaurantId, formData) => {
     try {
-      const updatedRestaurant = await hootService.addFood(
+      const updatedRestaurant = await restaurantService.addFood(
         restaurantId,
         formData
       );
       setRestaurants((prevRestaurants) =>
         prevRestaurants.map((restaurant) =>
-          restaurant._id === restaurantId ? updatedRestaurant : restaurant
+          restaurant._id === restaurantId
+            ? { ...restaurant, menu: [...restaurant.menu, formData] }
+            : restaurant
         )
       );
+
       navigate(`/restaurants/${restaurantId}`);
     } catch (error) {
       console.error("Error adding food:", error);
@@ -102,7 +100,7 @@ const App = () => {
   };
   const handleUpdateFood = async (restaurantId, foodId, updatedFoodData) => {
     try {
-      const updatedFood = await hootService.updateFood(
+      const updatedFood = await restaurantService.updateFood(
         restaurantId,
         foodId,
         updatedFoodData
@@ -129,7 +127,7 @@ const App = () => {
 
   const handleDeleteFood = async (restaurantId, foodId) => {
     try {
-      await hootService.deleteFood(restaurantId, foodId);
+      await restaurantService.deleteFood(restaurantId, foodId);
       setRestaurants((prevRestaurants) =>
         prevRestaurants.map((restaurant) =>
           restaurant._id === restaurantId
@@ -158,12 +156,12 @@ const App = () => {
             <Route path="/" element={<Dashboard user={user} />} />
             <Route
               path="/restaurants"
-              element={<HootList restaurants={restaurants} />}
+              element={<RestaurantsList restaurants={restaurants} />}
             />
             <Route
               path="/restaurants/:restaurantsId"
               element={
-                <HootDetails
+                <RestaurantDetails
                   setRestId={setRestId}
                   user={user}
                   setSelectedRestaurant={setSelectedRestaurant}
@@ -186,7 +184,7 @@ const App = () => {
             />
             <Route
               path="/restaurants/new"
-              element={<HootForm handleAddRestaurant={handleAddRestaurant} />}
+              element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />}
             />
             <Route
               path="restaurants/owner/:ownerId"
