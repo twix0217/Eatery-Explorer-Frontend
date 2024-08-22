@@ -9,6 +9,7 @@ the Eater Explorer is a website where users can find various restaurants with va
 ## Instructions
 The user must sign up, and then sign in with the same username and password, each user can add his own restaurant along with it's details (restaurant name, cuisine, location, and description), also he can add food menu in each restaurant along with it's details(food name, type, price and description), the owner of the restaurant can edit the details of the restaurant and food, and he can delete them. Also each user can view the list of all the restaurants and add comments on the restaurant as well as adding comments on the food, each user can delete his own comment. In addition, the owner of the restaurant can view the list of the restaurants that he owns along with it's details, also he can view the food menu of each restaurant he owns along with it's details.
 
+ [Deployment Link](https://eatery-explorer-frontend-q5bkcaaqn-mujtaba-sultans-projects.vercel.app/)
 
 
 
@@ -32,23 +33,7 @@ The user must sign up, and then sign in with the same username and password, eac
 * CSS for styling
 * [Trello for planning](https://trello.com/b/fWjFv1X9/eatery)
 
-## Wire Frame: 
-### Sign Up:
-![alt text](./Resources/image-2.png)
-### Sign In:
-![alt text](./Resources/image-3.png)
-### Landing Page:
-![alt text](./Resources/image-17.png)
-### Create Restaurant:
-![alt text](./Resources/image-4.png)
-### Restaurant Details:
-![alt text](./Resources/image-6.png)
-### Menu:
-![alt text](./Resources/image-8.png)
-### Create Food:
-![alt text](./Resources/image-5.png)
-### Food Details:
-![alt text](./Resources/image-7.png)
+
 
 ## Difficulties
 * Displaying the name of the owner of each restaurant
