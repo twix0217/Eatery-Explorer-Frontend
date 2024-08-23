@@ -13,9 +13,7 @@ The user must sign up, and then sign in with the same username and password, eac
 
 
 
-## ERD:
 
-![alt text](./Resources/image-1.png)
 
 ## user stories :
 
@@ -33,6 +31,19 @@ The user must sign up, and then sign in with the same username and password, eac
 * CSS for styling
 * [Trello for planning](https://trello.com/b/fWjFv1X9/eatery)
 
+## Screenshots
+![alt text](./Resources/image-1.png)
+![alt text](./Resources/image-2.png) 
+ ![alt text](./Resources/image-3.png) 
+ ![alt text](./Resources/image-4.png)
+  ![alt text](./Resources/image-5.png) 
+  ![alt text](./Resources/image-6.png) 
+  ![alt text](./Resources/image-7.png) 
+  ![alt text](./Resources/image-8.png) 
+  ![alt text](./Resources/image-9.png) !
+  [alt text](./Resources/image-10.png) 
+  ![alt text](./Resources/image-11.png)
+   ![alt text](./Resources/image.png)
 
 
 ## Difficulties
@@ -46,3 +57,4 @@ The user must sign up, and then sign in with the same username and password, eac
 ## Credits
 * Refering to the hoot lab template
 * MDN Documentations
+* Most of the css was done by chatGPT

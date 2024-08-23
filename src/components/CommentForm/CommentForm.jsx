@@ -33,7 +33,7 @@ const CommentForm = ({handleAddComment}) => {
         className="comment-textarea"
       />
       </div>
-      <button type="submit">SUBMIT COMMENT</button>
+      <button type="submit" className='submit-comment-btn'>SUBMIT COMMENT</button>
     </form>
     </div>
   );

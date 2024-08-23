@@ -40,44 +40,47 @@ const SignupForm = (props) => {
   };
 
   return (
-    <main>
-      <h1>Sign Up</h1>
-      <p>{message}</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
+    <main className="signup-main">
+    <h1 className="signup-heading">Sign Up</h1>
+    <p className="signup-message">{message}</p>
+      <form onSubmit={handleSubmit} className="signup-form">
+        <div className="signup-form-group"> 
+          <label htmlFor="username" className="signup-form-label">Username:</label>
           <input
             type="text"
             id="username"
             value={username}
             name="username"
             onChange={handleChange}
+             className="signup-form-input"
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className="signup-form-group">
+        <label htmlFor="password" className="signup-form-label">Password:</label>
           <input
             type="password"
             id="password"
             value={password}
             name="password"
             onChange={handleChange}
+             className="signup-form-input"
           />
         </div>
-        <div>
-          <label htmlFor="confirm">Confirm Password:</label>
+        <div className="signup-form-group">
+        <label htmlFor="confirm" className="signup-form-label">Confirm Password:</label>
           <input
             type="password"
             id="confirm"
             value={passwordConf}
             name="passwordConf"
             onChange={handleChange}
+              className="signup-form-input"
           />
         </div>
-        <div>
-          <button disabled={isFormInvalid()}>Sign Up</button>
-          <Link to="/">
-            <button>Cancel</button>
+        <div className="signup-form-actions">
+        <button type="submit" className="signup-form-button" disabled={isFormInvalid()}>Sign Up</button>
+        <Link to="/" className="signup-form-link">
+            <button type="button" className="signup-form-button">Cancel</button>
           </Link>
         </div>
       </form>

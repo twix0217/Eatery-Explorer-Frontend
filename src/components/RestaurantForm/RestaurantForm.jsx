@@ -19,9 +19,10 @@ const restaurantForm = ({ handleAddRestaurant }) => {
   };
 
   return (
-    <main>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">name:</label>
+    <main className="restaurant-form">
+      <form onSubmit={handleSubmit} className="restaurant-form-container">
+      <div className="form-group">
+        <label htmlFor="name" className="form-label">name:</label>
         <input
           required
           type="text"
@@ -29,17 +30,24 @@ const restaurantForm = ({ handleAddRestaurant }) => {
           id="name"
           value={formData.title}
           onChange={handleChange}
+            className="form-input"
         />
-        <label htmlFor="describtion">description</label>
+         </div>
+
+         <div className="form-group">
+        <label htmlFor="describtion" className="form-label">description</label>
         <textarea
           required
           name="describtion"
           id="text-input"
           value={formData.text}
           onChange={handleChange}
+             className="form-textarea"
         />
-        
-        <label htmlFor="location">location</label>
+         </div>
+
+         <div className="form-group">
+        <label htmlFor="location" className="form-label">location</label>
         <textarea
           required
           type="location"
@@ -47,14 +55,20 @@ const restaurantForm = ({ handleAddRestaurant }) => {
           id="text-input"
           value={formData.text}
           onChange={handleChange}
+             className="form-input"
         />
-        <label htmlFor="cuisine">Cuisine</label>
+          </div>
+
+          <div className="form-group">
+
+        <label htmlFor="cuisine" className="form-label">Cuisine</label>
         <select
           required
           name="cuisine"
           id="cuisine"
           value={formData.category}
           onChange={handleChange}
+           className="form-select"
         >
           <option value="italian">italian</option>
           <option value="indian">indian</option>
@@ -63,7 +77,8 @@ const restaurantForm = ({ handleAddRestaurant }) => {
           <option value="japanese">japanese</option>
           <option value="mexican">mexican</option>
         </select>
-        <button type="submit">SUBMIT</button>
+        </div>
+        <button type="submit"  className="submit-button">SUBMIT</button>
       </form>
     </main>
   );

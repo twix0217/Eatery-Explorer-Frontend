@@ -80,41 +80,45 @@ const foodDetails = (props) => {
   //----------------------------------------------
 
   if (!food) {
-    return <main>loading....</main>;
+    return <main  className="loading">loading....</main>;
   }
 
   return (
-    <>
-      <h4>{food.name}</h4>
-      <ul>
+    <div className="food-details">
+      <div className="food-header">
+      <h4 className="food-name">{food.name}</h4>
+      <ul className="food-info">
         <li>dish type : {food.type}</li>
         <li>dish description :{food.description}</li>
         <li>price : {food.price}</li>
+        </ul>
         {props.user.id === restaurant.owner && (
-          <p>
-            <Link to={`/restaurants/${restaurantId}/menu/${foodId}/edit`}>
+           <div className="food-actions">
+            <Link to={`/restaurants/${restaurantId}/menu/${foodId}/edit`}  className="edit-link">
               Edit
             </Link>
-            <button onClick={handleDeleteClick}>Delete Food</button>
-          </p>
+            <button onClick={handleDeleteClick} className="delete-button">Delete Food</button>
+            </div>
         )}
-      </ul>
-
+    </div>
+    <div className="comments-section">
       {food.comments.length === 0 ? (
-        <>
+       <div className="no-comments">
           <h4>no comments yet</h4>
           <CommentForm handleAddComment={handleAddComment} />
-        </>
+       </div>
       ) : (
-        <>
-          <ul>
+        <div className="comments-list">
+         
             <h4>comments:</h4>
 
             <CommentForm handleAddComment={handleAddComment} />
             {food.comments.map((comment) => {
-              return (
-                <div>
+            
+           return <div key={comment._id} className="comment">
+                  
                   <form
+                  className="comment-form"
                     action=""
                     id={comment._id}
                     onSubmit={handlesubmitDelete}
@@ -124,16 +128,17 @@ const foodDetails = (props) => {
                     </p>
 
                     {comment.authorId === props.user.id ? (
-                      <button type="submit">delete</button>
+                      <button type="submit" className="delete-comment-button">delete</button>
                     ) : null}
                   </form>
                 </div>
-              );
+            
             })}
-          </ul>
-        </>
-      )}
-    </>
+         
+         </div>
+        )}
+      </div>
+    </div>
   );
 };
 export default foodDetails;

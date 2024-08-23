@@ -5,7 +5,7 @@ import FoodDetails from "../foodDetails/foodDetails";
 // Services
 import restaurantService from "../../services/restaurantService";
 import commentService from "../../services/commentService";
-import './RestaurantDetails.css';
+import "./RestaurantDetails.css";
 // Components
 import AuthorDate from "../common/AuthorDate";
 import CommentForm from "../CommentForm/CommentForm";
@@ -72,154 +72,158 @@ const RestaurantDetails = (props) => {
     return (
       <div className="loading">
         <h3>Loading...</h3>
-   </div>
+      </div>
     );
   }
 
   // console.log(restaurant);
   return (
     <main className="restaurant-details">
-        <header className="restaurant-header">
+      <header className="restaurant-header">
         <h1 className="restaurant-name">{restaurant.name.toUpperCase()}</h1>
-        <h2>{restaurant.type}</h2>
-        <h3>Description: {restaurant.describtion}</h3>
-        <h3>Location: {restaurant.location}</h3>
-        <h3>Cuisine: {restaurant.cuisine}</h3>
-        <br />
-
-        <div>
-          <ul>
-            {restaurant.menu.filter((item) => item.type === "Main Course")
-              .length > 0 ? (
-              <>
-                <h3>Main Courses: </h3>
-                {restaurant.menu
-                  .filter((item) => item.type === "Main Course")
-                  .map((item) => (
-                    <li key={item._id}>
-                      <Link
-                        to={`/restaurants/${restaurant._id}/menu/${item._id}`}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-              </>
-            ) : null}
-          </ul>
-        </div>
-
-        <br />
-
-        <div>
-          <ul>
-            {restaurant.menu.filter((item) => item.type === "Appetizer")
-              .length > 0 ? (
-              <>
-                <h3>Appetizers: </h3>
-                {restaurant.menu
-                  .filter((item) => item.type === "Appetizer")
-                  .map((item) => (
-                    <li key={item._id}>
-                      <Link
-                        to={`/restaurants/${restaurant._id}/menu/${item._id}`}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-              </>
-            ) : null}
-          </ul>
-        </div>
-
-        <br />
-
-        <div>
-          <ul>
-            {restaurant.menu.filter((item) => item.type === "Dessert").length >
-            0 ? (
-              <>
-                <h3>Desserts: </h3>
-                {restaurant.menu
-                  .filter((item) => item.type === "Dessert")
-                  .map((item) => (
-                    <li key={item._id}>
-                      <Link
-                        to={`/restaurants/${restaurant._id}/menu/${item._id}`}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-              </>
-            ) : null}
-          </ul>
-        </div>
-
-        <br />
-
-        <div>
-          <ul>
-            {restaurant.menu.filter((item) => item.type === "Beverage").length >
-            0 ? (
-              <>
-                <h3>Beverages: </h3>
-                {restaurant.menu
-                  .filter((item) => item.type === "Beverage")
-                  .map((item) => (
-                    <li key={item._id}>
-                      <Link
-                        to={`/restaurants/${restaurant._id}/menu/${item._id}`}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-              </>
-            ) : null}
-          </ul>
-        </div>
+        <h2 className="restaurant-type">{restaurant.type}</h2>
+        <h3 className="restaurant-description">
+          Description: {restaurant.describtion}
+        </h3>
+        <h3 className="restaurant-location">Location: {restaurant.location}</h3>
+        <h3 className="restaurant-cuisine">Cuisine: {restaurant.cuisine}</h3>
       </header>
 
-      <section>
+      <div className="menu-section">
+        {restaurant.menu.filter((item) => item.type === "Main Course").length >
+        0 ? (
+          <div className="menu-category">
+            <h3>Main Courses: </h3>
+            <ul>
+              {restaurant.menu
+                .filter((item) => item.type === "Main Course")
+                .map((item) => (
+                  <li key={item._id}>
+                    <Link
+                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                      className="menu-item-link"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ) : null}
+
+        {restaurant.menu.filter((item) => item.type === "Appetizer").length >
+        0 ? (
+          <div className="menu-category">
+            <h3>Appetizers: </h3>
+            <ul>
+              {restaurant.menu
+                .filter((item) => item.type === "Appetizer")
+                .map((item) => (
+                  <li key={item._id}>
+                    <Link
+                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                      className="menu-item-link"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ) : null}
+
+        {restaurant.menu.filter((item) => item.type === "Dessert").length >
+        0 ? (
+          <div className="menu-category">
+            <h3>Desserts: </h3>
+            <ul>
+              {restaurant.menu
+                .filter((item) => item.type === "Dessert")
+                .map((item) => (
+                  <li key={item._id}>
+                    <Link
+                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                      className="menu-item-link"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ) : null}
+
+        {restaurant.menu.filter((item) => item.type === "Beverage").length >
+        0 ? (
+          <div className="menu-category">
+            <h3>Beverages: </h3>
+            <ul>
+              {restaurant.menu
+                .filter((item) => item.type === "Beverage")
+                .map((item) => (
+                  <li key={item._id}>
+                    <Link
+                      to={`/restaurants/${restaurant._id}/menu/${item._id}`}
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+
+      <div className="actions">
         {props.user.id === restaurant.owner && (
-          <Link to={`/restaurants/${restaurant._id}/edit`}>
+          <Link
+            to={`/restaurants/${restaurant._id}/edit`}
+            className="action-link"
+          >
             Edit Restaurant
           </Link>
         )}
-        <br />
+
         {props.user.id === restaurant.owner && (
-          <Link to={`/restaurants/${restaurant._id}/add-food`}>Add Food</Link>
+          <Link
+            to={`/restaurants/${restaurant._id}/add-food`}
+            className="action-link"
+          >
+            Add Food
+          </Link>
         )}
 
         {props.user.id === restaurant.owner ? (
-          <form onSubmit={handlesubmitC} action="">
-            <button type="submit">delete the restaurant</button>
+          <form onSubmit={handlesubmitC} action="" className="delete-form">
+            <button type="submit" className="action-button">
+              delete the restaurant
+            </button>
           </form>
         ) : null}
+      </div>
 
-        <section>
-          <h2>Comments on {restaurant.name.toUpperCase()}:</h2>
-          <CommentForm handleAddComment={handleAddComment} />
-          {restaurant.comments.length === 0 ? (
-            <p>There are no comments.</p>
-          ) : (
-            restaurant.comments.map((comment) => (
-              <div key={comment._id}>
-                <form action="" id={comment._id} onSubmit={handlesubmitDelete}>
-                  <p>
-                    <b>{comment.authorName}</b>: {comment.text}
-                  </p>
+      <section className="comments-section">
+        <h2>Comments on {restaurant.name}:</h2>
+        <CommentForm handleAddComment={handleAddComment} />
+        {restaurant.comments.length === 0 ? (
+          <p>There are no comments.</p>
+        ) : (
+          restaurant.comments.map((comment) => (
+            <div key={comment._id} className="comment">
+              <form action="" id={comment._id} onSubmit={handlesubmitDelete}>
+                <p>
+                  <b>{comment.authorName}</b>: {comment.text}
+                </p>
 
-                  {comment.authorId === props.user.id ? (
-                    <button type="submit">delete</button>
-                  ) : null}
-                </form>
-              </div>
-            ))
-          )}
-        </section>
+                {comment.authorId === props.user.id ? (
+                  <button type="submit" className="delete-comment-button">
+                    delete
+                  </button>
+                ) : null}
+              </form>
+            </div>
+          ))
+        )}
       </section>
     </main>
   );
