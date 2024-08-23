@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import './UpdateForm.css';
 const UpdateForm = ({ handleUpdateRestaurant }) => {
   const { restaurantId } = useParams();
   const [formData, setFormData] = useState({

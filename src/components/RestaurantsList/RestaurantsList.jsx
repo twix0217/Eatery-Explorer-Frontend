@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import AuthorDate from '../common/AuthorDate';
-
+import './RestaurantsList.css';
 const restaurantsList = ({restaurants}) => {
   if (!restaurants.length) return <main>Loading...</main>;
 

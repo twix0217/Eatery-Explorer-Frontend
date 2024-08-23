@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import './RestaurantForm.css';
 const restaurantForm = ({ handleAddRestaurant }) => {
   const [formData, setFormData] = useState({
     name: '',

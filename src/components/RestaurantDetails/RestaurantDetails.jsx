@@ -5,7 +5,7 @@ import FoodDetails from "../foodDetails/foodDetails";
 // Services
 import restaurantService from "../../services/restaurantService";
 import commentService from "../../services/commentService";
-
+import './RestaurantDetails.css';
 // Components
 import AuthorDate from "../common/AuthorDate";
 import CommentForm from "../CommentForm/CommentForm";
@@ -70,17 +70,17 @@ const RestaurantDetails = (props) => {
 
   if (!restaurant) {
     return (
-      <main>
+      <div className="loading">
         <h3>Loading...</h3>
-      </main>
+   </div>
     );
   }
 
   // console.log(restaurant);
   return (
-    <main>
-      <header>
-        <h1>{restaurant.name.toUpperCase()}</h1>
+    <main className="restaurant-details">
+        <header className="restaurant-header">
+        <h1 className="restaurant-name">{restaurant.name.toUpperCase()}</h1>
         <h2>{restaurant.type}</h2>
         <h3>Description: {restaurant.describtion}</h3>
         <h3>Location: {restaurant.location}</h3>

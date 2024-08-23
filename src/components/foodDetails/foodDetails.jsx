@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import './foodDetails.css';
 // Services
 import restaurantService from "../../services/restaurantService";
 import commentService from "../../services/commentService";
